@@ -1,0 +1,72 @@
+# Scheduler
+
+[SLURM](https://slurm.schedmd.com/) is responsible for executing jobs across the cluster.
+In contrast to running a "direct" R job from the command line on a server without a scheduler, jobs are submitted to the scheduler which then takes care of the execution while accouting for other running processes.
+
+In R, this is done via the R package [rzmq](https://github.com/ropensci/rzmq) and [clustermq](https://github.com/mschubert/clustermq).
+Both packages provide interfaces for the [zmq](http://zeromq.org/) library which in fact is doing the work of sending code requests of any languate to SLURM.
+While the _rzmq_ package is the technical interface to `zmq` in this combination, the _clustermq_ package is used by the user to start the pipeline of submitting a job to the scheduler.
+
+## First steps
+
+Rather than just calling a R script, you need to wrap your code into a function and invoke it using `clustermq::Q()`.
+While at first this might look like a more complex way to run R code than just executing it at the command line, you will experience the benefits of this way along the path:
+
+- You are forced to "functionize" your code, putting in into smaller pieces and diverge from long R scripts
+- In combination with [drake](https://github.com/ropensci/drake) you are able to reprodcible track already built targets and parallelize the building of intermediate targets
+
+[drake](https://github.com/ropensci/drake) provides an interface to `clustermq` giving you the possibility of running multiple "targets" (which you can think of as one R script or one intermediate step) in parallel on the HPC.
+These "targets" can again be parallelized.
+For more information see the [drake manual](https://ropenscilabs.github.io/drake-manual/) and especially the section about [HPC computing](https://ropenscilabs.github.io/drake-manual/hpc.html).
+
+Is is highly recommended that you set up an [SSH key](https://www.digitalocean.com/community/tutorials/how-to-configure-ssh-key-based-authentication-on-a-linux-server) to login to the server to avoid having to type your password on every login/job submission.
+
+If you do not want to use [drake](https://github.com/ropensci/drake), you can also use `clustermq::Q()` directly.
+And no, there is no other way to submit your jobs to the compute nodes of the cluster as these can only be accessed via SLURM.
+
+## Slurm commands
+
+While the execution of jobs is explained in more detail in Chapter, the following section is aimed to make you more familiar with the usage of the scheduler.
+
+The basic slurm commands are
+
+- `sinfo`: An overview of the current state of the nodes
+
+```sh
+sinfo
+
+PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+normal*      up   infinite      3    mix c[0-2]
+```
+
+- `squeue`: An overview of the current jobs that are queued, including information about running jobs
+
+```sh
+squeue
+
+JOBID     PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
+129_[2-5]    normal  cmq7381  patrick PD       0:00      1 (Resources)
+121_2        normal  cmq7094  patrick  R    6:24:17      1 c1
+121_3        normal  cmq7094  patrick  R    6:24:17      1 c2
+129_1        normal  cmq7381  patrick  R    5:40:44      1 c0
+```
+
+- `sacct`: Overview of jobs that were submitted in the past including their end state
+
+```sh
+122             cmq7094     normal     (null)          0  COMPLETED      0:0
+123             cmq7094     normal     (null)          0    PENDING      0:0
+121             cmq7094     normal     (null)          0    PENDING      0:0
+125             cmq6623     normal     (null)          0     FAILED      1:0
+126             cmq6623     normal     (null)          0     FAILED      1:0
+127             cmq6623     normal     (null)          0     FAILED      1:0
+128             cmq6623     normal     (null)          0     FAILED      1:0
+124             cmq6623     normal     (null)          0     FAILED      1:0
+130             cmq7381     normal     (null)          0    PENDING      0:0
+```
+
+- `scancel`: Cancel running jobs by job ID
+
+
+
+

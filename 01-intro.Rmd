@@ -1,21 +1,44 @@
 # Introduction {#intro}
 
-You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods).
+This is a user manual for the High-Performance-Server (HPC) of the GIScience chair at the Friedrich-Schiller-University Jena.
 
-Figures and tables with captions will be placed in `figure` and `table` environments, respectively.
+Its main purpose is to do R processing and its setup is tailored towards this.
+Nevertheless, of course also any job can be submitted to the HPC.
+However, the following manual will focus on getting R code running.
 
-```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
-par(mar = c(4, 4, .1, .1))
-plot(pressure, type = 'b', pch = 19)
-```
+The big advantage of a HPC is that users can submit jobs to ONE remote server which then distributes the work across multiple machines in the background.
+Incoming processing requests (jobs) are handled by the installed scheduler (SLURM), taking away the work of scheduling the job and the fear of clashing with other users.
+The status of the job request can be queried easily.
+Administration is simpliefied by provisioning all compute nodes with the same virtual image.
+This way, update tasks are reduced and differences between the machines are avoided.
+Administration is further simplified by using the [Spack]() package manager as this application allows for version-agnostis library installations on the user level without the need of requesting and waiting for custom installation to the admin.
 
-Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
+The $HOME directory of every used is shared across all nodes, avoiding the need to keep data and scripts in sync across multiple machines.
 
-```{r nice-tab, tidy=FALSE}
-knitr::kable(
-  head(iris, 20), caption = 'Here is a nice table!',
-  booktabs = TRUE
-)
-```
+## Web Address
 
-You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].
+* gisc.ads.uni-jena.de (short for GIS cluster)
+* IP: 10.35.158.19
+
+## Hardware
+
+Each node of the HPC has the following hardware:
+
+- CPU: Threadripper 2950X, 16-core, 3.5 GHz - 4.4 GHz
+- RAM: 126 GB DDR4 
+- 1 TB M2 SSD
+
+Currently, three nodes are available for processing. 
+The master node (which will be referred to as the _system management server_ (SMS) from here on) is currently not used as it is hosting the _Rstudio Server_ application.
+Depending on the load, we might also add it as a computing node in the future.
+
+## Software
+
+The HPC was built following the installation guide provided by the [Open HPC](https://openhpc.community/) community (using the "Warewulf + Slurm" edition).
+It is currently running on a CentOS 7.6 operating system using the CentOS main-line Kernel (currently at version 4.20).
+The scheduler that is used for queuing processing job requests is [SLURM](https://slurm.schedmd.com/).
+Load monitoring is performed via [Ganglia](http://ganglia.sourceforge.net/). 
+A live view is accessable [here](http://10.35.158.19/ganglia/?r=hour&cs=&ce=&m=load_one&s=by+name&c=&tab=m&vn=&hide-hf=false).
+[Spack][https://spack.io/] is used as the package manager.
+More detailed instructions on the scheduler and the package manager can be found in their respective chapters.
+

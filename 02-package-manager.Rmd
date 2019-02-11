@@ -1,0 +1,77 @@
+# The package manager: Spack {#spack}
+
+[Spack](spack.io) is used as the package manager on this system.
+The big advantage is that installations are possible on the user level with the option of installing libraries at different versions (and with different compilers).
+
+## Getting Started
+
+First, `spack` needs to be downloaded and added to your path. 
+Download it: `git clone https://github.com/spack/spack.git` and add the following to your `~/.bashrc` file: `source ~//spack/share/spack/setup-env.sh`.
+Now you will have access to `spack` functions every time you log in.
+
+
+## Compilers
+
+The basic compiler installed by the system is `gcc` at version 4.8.5.
+The first step should be to install a newer compiler and use this as the default one for installing further packages.
+
+To do so, use
+
+```sh
+spack install gcc@7.4.0
+```
+
+(The installation may take about ~ 20 min)
+
+This version of `gcc` worked fine building most libraries requiered by various R packages (including R itself).
+You are free to try out other versions :)
+
+Now, you can either specify this version of `gcc` upon every install (by appending `%gcc@7.4.0` in every call) or set is as the default in `~/.spack/packages.yaml` (recommended):
+
+```sh
+packages:
+  all:
+    compiler: [gcc@7.4.0]
+```
+
+## Installing libraries {#installing-libraries}
+
+The first step that you should do is usually installing R itself.
+If you followed all the steps above, the following should work:
+
+```sh
+spack install r
+```
+
+This will install the most recent version of R.
+You can also install other versions by adding `@<version>`, e.g. `spack install r@3.5.1`.
+
+Here is a list of recommended system libraries that should be installed when using R for geospatial-related processing:
+
+- gdal
+- geos
+- proj
+- git
+- udunits2
+
+## Loading libraries
+
+Now that you installed these, you can install R packages. 
+However, you first need to load the installed version of R to be able to use it.
+This can be done via `spack load <library>`.
+In this call you can of course also specify a custom version to be loaded.
+
+To avoid having to load these installations on every login, you can put these commands into your `~/.bashrc` so that they are loaded on every login.
+
+## Project specific environments 
+
+If you have multiple projects, you may need different versions/libraries in each.
+This can be done by creating an [environment](https://spack.readthedocs.io/en/latest/tutorial_environments.html?highlight=environment) with spack.
+Basically, an enviroment holds metadata about spack modules that are related to a specific project.
+See the linked manual on how to create an enviroment and add modules to it.
+This way, you can seperate the modules loaded by your default shell (specified in `~/.bashrc`) and project specific ones.
+
+## Additional information
+
+This chapter provides only a bare-bone introduction to use `spack` on the HPC.
+It is highly recommended to read the full [user manual](https://spack.readthedocs.io/en/latest/index.html) to get more familiar with spack to tailor it to your needs.
