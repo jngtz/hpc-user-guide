@@ -148,3 +148,7 @@ See section ["The resources column for transient workers"](https://ropenscilabs.
 ## Monitoring progress
 
 When submitting jobs you can track its progress by specifying a `log_file` in the `clustermq::Q()` call, e.g. `clustermq::Q(template = list(log_file = path/to/file))`.
+
+If your jobs are running on a node, you can SSH into it, e.g. `ssh c0`.
+In the node you can take a look at the current load by using `htop`.
+Note that you can only login if you have a running progress in a specific node.
