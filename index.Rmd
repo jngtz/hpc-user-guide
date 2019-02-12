@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
-bibliography: [book.bib, packages.bib]
+# bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 # github-repo: rstudio/bookdown-demo
@@ -28,6 +28,13 @@ This way, update tasks are reduced and differences between the machines are avoi
 Administration is further simplified by using the [Spack]() package manager as this application allows for version-agnostis library installations on the user level without the need of requesting and waiting for custom installation to the admin.
 
 The $HOME directory of every used is shared across all nodes, avoiding the need to keep data and scripts in sync across multiple machines.
+
+**Before you start**, please add a SSH key to your account to be able to login without password.
+Your password will consist of 20 characters and you will not remember it.
+See [this](https://help.github.com/articles/connecting-to-github-with-ssh/) guide if you have never worked with SSH keys before.
+If you have, you can also use `ssh-copy-id <username>@10.35.158.19` to copy your key to the server.
+Afterwards you should be able to login via `ssh <username>@10.35.158.19` without being prompted for your password.
+A working SSH setup is also requiered if you want to use the [SSH way](#ssh-mode) to schedule jobs.
 
 ## Web Address
 
@@ -56,3 +63,8 @@ A live view is accessable [here](http://10.35.158.19/ganglia/?r=hour&cs=&ce=&m=l
 [Spack][https://spack.io/] is used as the package manager.
 More detailed instructions on the scheduler and the package manager can be found in their respective chapters.
 
+## Data storage
+
+The data storage mount will be located at `/mnt/data` (via NFS).
+You are free to choose whether the server will be your primary working location holding all your scripts (and data) or whether you want to keep your scripts locally at your machine.
+If you use the [SSH way](#ssh-mode) to execute jobs on the HPC, you do not even need to login to the server to be able to run your scripts.
