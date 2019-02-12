@@ -30,7 +30,7 @@ Otherwise see the [Troubleshooting](#troubleshooting) chapter.
 
 **Be aware of setting `n_jobs` in the `template` argument of `clustermq::Q()` if your submitted job is parallelized!
 If you submit a job that is parallelized without telling the scheduler, the scheduler will reserve 1 core for this job (because it thinks it is sequential) but in fact multiple processes will spawn. 
-This will potentially affect all running processes on the server since the scheduler will accept more processing than it acutally can take.**
+This will potentially affect all running processes on the server since the scheduler will accept more processing than it actually can take.**
 See [here] for more information.
 
 ## From the SMS
@@ -63,7 +63,7 @@ R --no-save --no-restore -e 'clustermq:::worker("{{ master }}")'
 Note: The `#` signs are no mistake here, they are no "comment" signs in this context. 
 The `SBATCH` commands will be executed here.
 
-## From your local machine (via SSH)
+## From your local machine (via SSH) {#ssh-mode}
 
 You can use the servers right from your local machine without executing the job from the server explicitly.
 This works by sending requests to the scheduler via SSH.
@@ -100,7 +100,7 @@ received: PROXY_CMDqsys$submit_jobs(log_file = "/home/patrick/log.txt", n_jobs =
 
 While this is very convenient as it enables processing on the server without even logging in, it currently has one downside:
 The first call to `clustermq:::ssh_proxy()` takes the R configuration (= `.Rprofile`) specified in your default R interpreter on the SMS.
-Here, you can specifiy the location of your `slurm_clustermq.tmpl` file which again loads your desired libraries via `spack` and changes the directory to your project directory so that your _packrat_ libraries are used (for example).
+Here, you can specify the location of your `slurm_clustermq.tmpl` file which again loads your desired libraries via `spack` and changes the directory to your project directory so that your _packrat_ libraries are used (for example).
 However, this means that you cannot work with multiple projects at the same with using the SSH approach as you can only point to one Slurm template file at the same time.
 
 In summary the pipeline of the call is: `clustermq::Q()` (local) -> R (remote) -> `slurm_clustermq.tmpl` (specified in `.Rprofile`) (remote) -> SLURM -> processing
@@ -124,6 +124,8 @@ options(
 )
 ```
 
+Furthermore, all required R packages need to be installed on the server.
+
 ## Allocating resources
 
 When submitting jobs via `clustermq::Q()`, it is important to tell the scheduler how many cores should be reserved via the `n_jobs` argument.
@@ -140,5 +142,5 @@ This tells the scheduler how many resources (here cpus) your job needs.
 2. via `drake::make()` (recommended)
 
 In `drake::make()` you can set two arguments: `jobs` and `template(list(n_jobs = <value>))`. The first one determines how many jobs should be added to the Slurm queue. The second one tells Slurm how many resources each job needs.
-You can further narrow down the requierements for a target by specifying these already in the plan. 
+You can further narrow down the requirements for a target by specifying these already in the plan. 
 See section ["The resources column for transient workers"](https://ropenscilabs.github.io/drake-manual/hpc.html#advanced-options) in the drake manual.
