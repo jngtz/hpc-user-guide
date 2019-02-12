@@ -144,3 +144,7 @@ This tells the scheduler how many resources (here cpus) your job needs.
 In `drake::make()` you can set two arguments: `jobs` and `template(list(n_jobs = <value>))`. The first one determines how many jobs should be added to the Slurm queue. The second one tells Slurm how many resources each job needs.
 You can further narrow down the requirements for a target by specifying these already in the plan. 
 See section ["The resources column for transient workers"](https://ropenscilabs.github.io/drake-manual/hpc.html#advanced-options) in the drake manual.
+
+## Monitoring progress
+
+When submitting jobs you can track its progress by specifying a `log_file` in the `clustermq::Q()` call, e.g. `clustermq::Q(template = list(log_file = path/to/file))`.
