@@ -1,12 +1,12 @@
 # The package manager: Spack {#spack}
 
 [Spack](spack.io) is used as the package manager on this system.
-The big advantage is that installations are possible on the user level with the option of installing libraries at different versions (and with different compilers).
+The big advantage is that installations are possible on the **user level** with the option of installing libraries at different versions (and with different compilers).
 
 ## Getting Started
 
-First, `spack` needs to be downloaded and added to your path. 
-Download it: `git clone https://github.com/spack/spack.git` and add the following to your `~/.bashrc` file: `source ~//spack/share/spack/setup-env.sh`.
+First, `spack` needs to be downloaded and added to your $PATH. 
+Download it: `git clone https://github.com/spack/spack.git` and add the following to your `~/.bashrc` file: `source ~/spack/share/spack/setup-env.sh`.
 Now you will have access to `spack` functions every time you log in.
 
 
@@ -48,11 +48,37 @@ You can also install other versions by adding `@<version>`, e.g. `spack install 
 
 Here is a list of recommended system libraries that should be installed when using R for geospatial-related processing:
 
-- gdal
+- gdal (`spack install gdal +curl`)
 - geos
 - proj
 - git
 - udunits2
+
+### Installing libraries with options
+
+Libraries can usually be installed with different options.
+There are two important libraries that you need to install with non-default settings:
+
+- R
+- GDAL
+
+You can find out the installation options of a formula by doing `spack info <formula>`.
+Look for the "Variants" section to see all the flags.
+These can be enabled by using `+<flag>`. 
+Additionally, you can append the library that should be used in combination with this flag.
+See the [Spack manual](https://spack.readthedocs.io/en/latest/basic_usage.html#variants) for more information or the examples below.
+
+For R, it is highly recommended to build with a custom LAPACK library (usually `openblas`) to speed up linear algebra calculations.
+
+`spack install r +external-lapack ^openblas@0.3.5`
+
+To make this work, you need of course to install `openblas` first.
+
+For GDAL, it is important to install at least it with `libcurl` support.
+Otherwise functions like `sf::st_read()` will not be able to load shapefiles via URLs.
+Make sure to also check out the other available variants in case you need support for more external libraries in GDAL.
+
+`spack install gdal +curl ^curl@7.60.0`
 
 ## Loading libraries
 

@@ -1,9 +1,10 @@
 # Scheduler
 
 [SLURM](https://slurm.schedmd.com/) is responsible for executing jobs across the cluster.
-In contrast to running a "direct" R job from the command line on a server without a scheduler, jobs are submitted to the scheduler which then takes care of the execution while accouting for other running processes.
+In contrast to running a "direct" R job from the command line on a server without a scheduler.
+This application takes care of the execution queue while accouting for other running processes.
 
-In R, this is done via the R package [rzmq](https://github.com/ropensci/rzmq) and [clustermq](https://github.com/mschubert/clustermq).
+In R, this is done via the R packages [rzmq](https://github.com/ropensci/rzmq) and [clustermq](https://github.com/mschubert/clustermq).
 Both packages provide interfaces for the [zmq](http://zeromq.org/) library which in fact is doing the work of sending code requests of any languate to SLURM.
 While the _rzmq_ package is the technical interface to `zmq` in this combination, the _clustermq_ package is used by the user to start the pipeline of submitting a job to the scheduler.
 
@@ -12,7 +13,7 @@ While the _rzmq_ package is the technical interface to `zmq` in this combination
 Rather than just calling a R script, you need to wrap your code into a function and invoke it using `clustermq::Q()`.
 While at first this might look like a more complex way to run R code than just executing it at the command line, you will experience the benefits of this way along the path:
 
-- You are forced to "functionize" your code, putting in into smaller pieces and diverge from long R scripts
+- By being forced to "functionize" your code and putting in into smaller pieces, you'll diverge from long R scripts
 - In combination with [drake](https://github.com/ropensci/drake) you are able to reprodcible track already built targets and parallelize the building of intermediate targets
 
 [drake](https://github.com/ropensci/drake) provides an interface to `clustermq` giving you the possibility of running multiple "targets" (which you can think of as one R script or one intermediate step) in parallel on the HPC.
