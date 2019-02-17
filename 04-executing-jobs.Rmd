@@ -45,22 +45,17 @@ For example, one of my templates looks like this:
 #SBATCH --partition=normal
 #SBATCH --output={{ log_file | /dev/null }} # you can add .%a for array index
 #SBATCH --error={{ log_file | /dev/null }}
+#SBATCH --mem-per-cpu={{ memory | 2048 }}
+#SBATCH --cpus-per-task={{ n_cpus }}
 #SBATCH --array=1-{{ n_jobs }}
 
 cd path/to/project
 
-# load spack modules
-spack env activate <project>
-spack load r@3.5.1
-spack load gdal
-spack load proj
-spack load geos
-spack load udunits2
-
-R --no-save --no-restore -e 'clustermq:::worker("{{ master }}")'
+# make sure to set the desired R version
+/opt/R/3.5.1/bin/R --no-save --no-restore -e 'clustermq:::worker("{{ master }}")'
 ```
 
-Note: The `#` signs are no mistake here, they are no "comment" signs in this context. 
+Note: The `#` signs are no mistakes here, they are no "comment" signs in this context. 
 The `SBATCH` commands will be executed here.
 
 ## From your local machine (via SSH) {#ssh-mode}
