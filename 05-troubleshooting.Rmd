@@ -1,4 +1,4 @@
-# Troubleshooting
+# Troubleshooting and Cautionary Notes
 
 ## Known Issues
 
@@ -7,3 +7,9 @@
 - The "data storage" is not mounted yet.
 
 FAQ will appear here.
+
+## Cautionary Notes
+
+When writing files to disk, do not submit the job via SSH.
+This is due to the fact that computations are done in memory via SSH and the resultung object is also returned in memory.
+The cluster cannot write to a remote disk but only to its own file system.

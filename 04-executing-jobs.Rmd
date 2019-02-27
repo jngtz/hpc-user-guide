@@ -1,16 +1,11 @@
 # Submitting jobs
 
-## Requirements
-
-In order to run anything on the server (including the example above) it is required to install R and other system libraries that are need for your R packages.
-Please see the chapter about [Spack](#spack) for more information if you haven't done so yet.
-
 ## `clustermq` setup
 
-Every job submission is done via `clustermq::Q()`. 
+Every job submission is done via `clustermq::Q()` (either directly or via `drake`). 
 See the setup instructions in the [clustermq](https://github.com/mschubert/clustermq/wiki) package on how to setup the package.
 
-You need to set some options in your `.Rprofile`:
+First, you need to set some options in your `.Rprofile` (on the master node):
 
 ```
 options(
@@ -20,7 +15,7 @@ options(
 ```
 
 Note that you can have multiple `.Rprofile` files: One at the your home directory which is being used by your default R interpreter and one per project, at the root of your project directory.
-This enables you to load custom modules via `spack` for each project.
+This enables you to use custom R versions for each project
 
 Once you did this, you should be able to run the [example](https://github.com/mschubert/clustermq) in the README of the _clustermq_ package.
 It is a very simple example which finishes in a few seconds.
@@ -28,14 +23,15 @@ If it does not work, you either did something wrong or the nodes are busy.
 Check with `sinfo` and `squeue`.
 Otherwise see the [Troubleshooting](#troubleshooting) chapter.
 
-**Be aware of setting `n_jobs` in the `template` argument of `clustermq::Q()` if your submitted job is parallelized!
+```{block, type='rmdcaution'}
+Be aware of setting `n_cpus` in the `template` argument of `clustermq::Q()` if your submitted job is parallelized!
 If you submit a job that is parallelized without telling the scheduler, the scheduler will reserve 1 core for this job (because it thinks it is sequential) but in fact multiple processes will spawn. 
-This will potentially affect all running processes on the server since the scheduler will accept more processing than it actually can take.**
-See [here] for more information.
+This will potentially affect all running processes on the server since the scheduler will accept more processing than it actually can take.
+```
 
-## From the SMS
+## From the master node
 
-If you start jobs right from the SMS, you need to set the options given above.
+If you start jobs from the master node, you need to set the `.Rprofile` options given above.
 Note that you can add any bash commands into the scripts between the `SBATCH` section and the final R call.
 For example, one of my templates looks like this:
 
@@ -58,9 +54,16 @@ cd path/to/project
 Note: The `#` signs are no mistakes here, they are no "comment" signs in this context. 
 The `SBATCH` commands will be executed here.
 
+You can simply copy it and adjust it to your needs (set the right path to your project and specify the R version you want to use).
+
 ## From your local machine (via SSH) {#ssh-mode}
 
-You can use the servers right from your local machine without executing the job from the server explicitly.
+You can also use the servers right from your local machine without executing the job from the server explicitly (and hence without being logged in at all).
+
+```{block, type='rmdcaution'}
+Note that this mode is somewhat advanced and it is recommended to start jobs right from the master node as outlined above.
+```
+
 This works by sending requests to the scheduler via SSH.
 Once the jobs are finished, the resulting objects are available on your local machine.
 See the [ssh connector](https://github.com/mschubert/clustermq/wiki/Configuration#ssh-connector) section in the `clustermq` wiki for more detailed instructions.
@@ -130,15 +133,25 @@ There are two ways to specify this setting, depending on which approach you use:
 
 1. via `clustermq::Q()` directly
 
-Here you can directly set the `n_jobs` argument to the desired value. 
-It will then passed to the `slurm_clustermq.tmpl` file which has a line containing `#SBATCH --array=1-{{ n_jobs }}`.
+Here you can directly set the `n_cpus` argument to the desired value. 
+It will then be passed to the `slurm_clustermq.tmpl` file which has a line containing `#SBATCH --cpus-per-task{{ n_cpus }}`.
 This tells the scheduler how many resources (here cpus) your job needs.
+Note that the maximum number is `n_cpus = 32` as processes cannot be split across nodes.
 
 2. via `drake::make()` (recommended)
 
-In `drake::make()` you can set two arguments: `jobs` and `template(list(n_jobs = <value>))`. The first one determines how many jobs should be added to the Slurm queue. The second one tells Slurm how many resources each job needs.
-You can further narrow down the requirements for a target by specifying these already in the plan. 
+In `drake::make()` you can set this option via the argument `template = list(n_cpus = X)`.
 See section ["The resources column for transient workers"](https://ropenscilabs.github.io/drake-manual/hpc.html#advanced-options) in the drake manual.
+
+```{block, type='rmdcaution'}
+Please think upfront how many cpus your task requires. 
+If you use something like `mclapply(cores = 20)` but set `n_cpus` in the Slurm template to 16, you will just get 16 cpus.
+The remaining 4 workers are spawned but will always be in "waiting mode" as you only requested 16 cores.
+```
+
+Furthermore, if you want to use all ressources of a node and run into memory problems, try reducing the number of cpus.
+Each node has 126 GB RAM available which gets split up to the nodes. 
+If you scale down the number of cpus, you will have more memory/cpu available.
 
 ## Monitoring progress
 
@@ -147,3 +160,45 @@ When submitting jobs you can track its progress by specifying a `log_file` in th
 If your jobs are running on a node, you can SSH into it, e.g. `ssh c0`.
 In the node you can take a look at the current load by using `htop`.
 Note that you can only login if you have a running progress in a specific node.
+
+## Summary
+
+1. Decide which approach you want to use
+
+- `drake::make(parallelism = "clustermq", template = list(n_cpus = X, log_file = Y))` (recommended!)
+- `clustermq::Q(template = list(n_cpus = X, log_file = Y))`
+
+Both can be used from your local machine (SSH) or from the master node (recommended!).
+
+2. You need to have a Slurm template file in your project directory. This template needs to be referrended in your `.Rprofile` by `options(clustermq.template = "/path/to/file")`. The following settings are required:
+
+- `R version`
+- `--cpus-per-task`
+- `--log_file`
+- A `cd` command pointing to your project directory
+
+## Best practice {#best-practice}
+
+If you submit a job, you submit it to ONE node.
+You can submit as many tasks as you want in separate R sessios, they will be processed as ranked in the queue of the scheduler.
+However, submitting single jobs that finish quickly is tedious.
+The same applies to the submission of multiple jobs in separate R sessions.
+
+These two points are the reason why it is *highly* recommended to use `drake`.
+By using `drake`, all of your intermediate R objects are "targets". 
+You can specify any number of targets that should be build when calling `drake::make()`.
+`drake` will take care that for each target as separate job is created which is then added to the Slurm queue.
+
+For example, if you want to build three R objects named `object1`, `object2` and `object3` in parallel, one on each node:
+
+`drake::make(plan, targets = c("object1", "object2", "object3"), jobs = 3, template = list(n_cpus = 16, log_file = "/path/to/log.txt"))`
+
+- Creates three jobs which are added to the Slurm queue
+- Each jobs requires 16 cores
+- The job is finished once all targets have been built.
+
+After they are finished, they will be marked as "built" and added to a cache directory by `drake`, so you cannot accidentally rebuild them (unless you change somehting substantial in the code).
+
+If you follow this practive, the only thing you need to execute on the cluster will be this call (after you initialized the config by sourcing your `drake.R` file).
+
+

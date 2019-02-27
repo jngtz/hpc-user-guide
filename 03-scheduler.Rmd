@@ -25,6 +25,8 @@ Is is highly recommended that you set up an [SSH key](https://www.digitalocean.c
 If you do not want to use [drake](https://github.com/ropensci/drake), you can also use `clustermq::Q()` directly.
 And no, there is no other way to submit your jobs to the compute nodes of the cluster as these can only be accessed via SLURM.
 
+See also the section [best-practice](#best-practice) for more information on how to get started.
+
 ## Slurm commands
 
 While the execution of jobs is explained in more detail in Chapter, the following section is aimed to make you more familiar with the usage of the scheduler.
@@ -67,7 +69,3 @@ JOBID     PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)
 ```
 
 - `scancel`: Cancel running jobs by job ID
-
-
-
-

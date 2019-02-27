@@ -33,8 +33,14 @@ In case you need support for more, please notify Andreas or Patrick.
 ## Spack
 
 You can also install software on a user-level using [Spack](spack.io).
+At first I wanted to make this the default but I faced to many problems along the way.
+So for now, only use this if you want to install additional software on a user-level that is not already installed!
 
-[Spack](spack.io) is used as the package manager on this system.
+```{block, type='rmdcaution'}
+So for now, only use this if you want to install additional software on a user-level that is not already installed!
+Otherwise jump to the next Chapter.
+```
+
 The big advantage is that installations are possible on the **user level** with the option of installing libraries at different versions (and with different compilers).
 
 ### Getting Started
