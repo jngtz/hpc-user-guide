@@ -41,88 +41,23 @@ For example, one of my templates looks like this:
 #SBATCH --partition=normal
 #SBATCH --output={{ log_file | /dev/null }} # you can add .%a for array index
 #SBATCH --error={{ log_file | /dev/null }}
-#SBATCH --mem-per-cpu={{ memory | 2048 }}
 #SBATCH --cpus-per-task={{ n_cpus }}
 #SBATCH --array=1-{{ n_jobs }}
 
 cd path/to/project
 
+spack load r@<version>
+
+CMQ_AUTH={{ auth }}
+
 # make sure to set the desired R version
-/opt/R/3.5.1/bin/R --no-save --no-restore -e 'clustermq:::worker("{{ master }}")'
+R --no-save --no-restore -e 'clustermq:::worker("{{ master }}")'
 ```
 
 Note: The `#` signs are no mistakes here, they are no "comment" signs in this context. 
 The `SBATCH` commands will be executed here.
 
 You can simply copy it and adjust it to your needs (set the right path to your project and specify the R version you want to use).
-
-## From your local machine (via SSH) {#ssh-mode}
-
-You can also use the servers right from your local machine without executing the job from the server explicitly (and hence without being logged in at all).
-
-```{block, type='rmdcaution'}
-Note that this mode is somewhat advanced and it is recommended to start jobs right from the master node as outlined above.
-```
-
-This works by sending requests to the scheduler via SSH.
-Once the jobs are finished, the resulting objects are available on your local machine.
-See the [ssh connector](https://github.com/mschubert/clustermq/wiki/Configuration#ssh-connector) section in the `clustermq` wiki for more detailed instructions.
-
-To use this approach, you need to set the following `options()` in your projects `.Rprofile` on your **local** machine:
-
-```r
-options(
-    clustermq.scheduler = "ssh",
-    clustermq.ssh.host = "user@host", # use your user and host, obviously
-    clustermq.ssh.log = "~/cmq_ssh.log" # log for easier debugging
-)
-```
-
-Now every call to `clustermq::Q()` does the following:
-
-1. An SSH connection to the server is established 
-1. Your `~/.bashrc` file on the SMS is sourced and the R function call to `clustermq:::ssh_proxy()` is being executed.
-1. This R call again uses the `options()` from your default `.Rprofile` which has a pointer to a `slurm_clustermq.tmpl` file which is then being called.
-
-```r
-clustermq:::ssh_proxy(ctl=54306, job=50570)
-master ctl listening at: tcp://localhost:54306
-forwarding local network from: tcp://gisc:8800
-sent PROXY_UP to master ctl
-received common data:
-sent PROXY_READY to master ctl
-received: PROXY_CMDqsys$submit_jobs(log_file = "/home/patrick/log.txt", n_jobs = 3)
-```
-
-3. The final job request is send to the scheduler which then runs the job / adds it to the queue (last line of the block above).
-
-While this is very convenient as it enables processing on the server without even logging in, it currently has one downside:
-The first call to `clustermq:::ssh_proxy()` takes the R configuration (= `.Rprofile`) specified in your default R interpreter on the SMS.
-Here, you can specify the location of your `slurm_clustermq.tmpl` file which again loads your desired libraries via `spack` and changes the directory to your project directory so that your _packrat_ libraries are used (for example).
-However, this means that you cannot work with multiple projects at the same with using the SSH approach as you can only point to one Slurm template file at the same time.
-
-In summary the pipeline of the call is: `clustermq::Q()` (local) -> R (remote) -> `slurm_clustermq.tmpl` (specified in `.Rprofile`) (remote) -> SLURM -> processing
-
-### Requirements 
-
-#### Local
-
-- The `clustermq` package needs to be installed
-- `clustermq.scheduler` needs to be set to `"ssh"` in `options()`
-- `clustermq.ssh.host` needs to be specified `options()`
-
-#### Remote
-
-On the server, you need to specify the location of the `slurm_clustermq.tmpl` file in `options()` in the `.Rprofile` of your default R interpreter:
-
-```r
-options(
-  clustermq.scheduler = "slurm", 
-  clustermq.template = "<path/to/file>"
-)
-```
-
-Furthermore, all required R packages need to be installed on the server.
 
 ## Allocating resources
 
@@ -160,6 +95,8 @@ When submitting jobs you can track its progress by specifying a `log_file` in th
 If your jobs are running on a node, you can SSH into it, e.g. `ssh c0`.
 In the node you can take a look at the current load by using `htop`.
 Note that you can only login if you have a running progress in a specific node.
+
+Furthermore you can take a look [Ganglia](http://10.35.158.19/ganglia/?r=hour&cs=&ce=&m=load_one&s=by+name&c=OpenHPC&tab=m&vn=&hide-hf=false) to see the load of the HPC.
 
 ## Summary
 

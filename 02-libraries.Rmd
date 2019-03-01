@@ -1,0 +1,161 @@
+# Libraries and Modules {#libraries}
+
+## Adding Spack to your shell
+
+Most system relevant libraries are installed via [Spack](spack.io).
+They are available as environment modules.
+To be able to load modules as a user, you have to add `source /opt/spack/share/spack/setup-env.sh` to your `~/.bashrc` file.
+You can open the file e.g. by using `nano ~/.bashrc`.
+After you logged out and in again, the command below should work.
+
+Installed libraries you can be queried via `spack find` or `module avail`.
+Here is a snapshot:
+
+```sh
+spack find
+
+-- linux-centos7-x86_64 / gcc@7.4.0 -----------------------------
+autoconf@2.69              git@2.20.1                    libgpg-error@1.27     lz4@1.8.1.2      r@3.5.1
+automake@1.16.1            glib@2.56.3                   libiconv@1.15         lzo@2.09         r@3.5.2
+bison@3.0.5                gmake@4.2.1                   libjpeg-turbo@1.5.90  m4@1.4.18        readline@7.0
+byobu@5.127                gmp@6.1.2                     libpng@1.6.34         mpc@1.1.0        rhash@1.3.5
+bzip2@1.0.6                gobject-introspection@1.56.1  libpthread-stubs@0.4  mpfr@3.1.6       sqlite@3.26.0
+cairo@1.16.0               gperf@3.0.4                   libsigsegv@2.11       msgpack-c@3.0.1  tar@1.31
+ccache@3.3.4               harfbuzz@2.1.3                libtermkey@0.18       nasm@2.13.03     tcl@8.6.8
+cmake@3.13.4               help2man@1.47.4               libtiff@4.0.9         ncurses@6.1      tk@8.6.8
+curl@7.63.0                icu4c@60.1                    libtool@2.4.6         neovim@0.3.4     tmux@2.8
+diffutils@3.7              inputproto@2.3.2              libuv@1.25.0          nettle@3.4       udunits2@2.2.24
+environment-modules@4.2.2  isl@0.18                      libvterm@681          openblas@0.3.5   unibilium@1.2.0
+expat@2.2.5                jdk@11.0.2_9                  libx11@1.6.7          openssl@1.1.1a   unzip@6.0
+fish@3.0.0                 jemalloc@4.5.0                libxau@1.0.8          pango@1.41.0     util-macros@1.19.1
+flex@2.6.3                 json-c@0.13.1                 libxcb@1.13           pcre@8.42        xcb-proto@1.13
+font-util@1.3.1            kbproto@1.0.7                 libxdmcp@1.1.2        pcre@8.42        xextproto@7.3.0
+fontconfig@2.12.3          libarchive@3.3.2              libxml2@2.9.8         perl@5.26.2      xproto@7.0.31
+freetype@2.9.1             libbsd@0.9.1                  libxslt@1.1.33        pixman@0.38.0    xtrans@1.3.5
+gdal@2.4.0                 libevent@2.1.8                lua@5.2.4             pkgconf@1.5.4    xz@5.2.4
+gdbm@1.18.1                libffi@3.2.1                  lua-bitlib@23         proj@5.0.1       zlib@1.2.11
+geos@3.6.2                 libgcrypt@1.8.1               lua-lpeg@0.12.1       python@2.7.15
+gettext@0.19.8.1           libgeotiff@1.4.2              lua-mpack@1.0.0-0     python@3.7.2
+```
+
+## Loading libraries
+
+Libraries can be loaded via `spack load <library>`.
+Usually it is best practive to also specify the version. 
+Omitting it will work unless there are multiple versions of a library available.
+This will be the default very soon when the libraries are upgraded.
+Don't worry, the old version will stay available.
+That is one of the advantages of spack.
+
+For example, to have GDAL available to the following:
+
+```sh
+spack load gdal@2.4.0
+```
+
+You can check if it worked via 
+
+```sh
+gdalinfo --version
+
+GDAL 2.4.0, released 2018/12/14
+```
+
+## Default libraries
+
+It is useful to have some libraries loaded by default when logging in to the server.
+Simply add them to `~/.bashrc`.
+
+When running R for spatial analysis, the following are required:
+
+```sh
+spack load gdal@2.4.0
+spack load geos@3.6.2
+spack load proj@5.0.1
+spack load udunits2
+spack load r@3.5.2
+```
+
+Furthermore, I recommend the following ones:
+
+```sh
+spack load git # version control
+spack load byobu # persistent ssh
+spack load neovim # editor
+spack load ccache #faster package installation
+```
+
+
+
+## R
+
+All versiosn from v3.4.3 upwards are installed.
+Query them with `spack find r` and load a specific one with `spack load r@3.5.1`.
+
+## RStudio Server
+
+RStudio Server is running at port 8787 (10.35.158.19:8787).
+
+## Scientific Libraries
+
+If you cannot find your library using `spack find`, please contact Patrick.
+
+## Getting Started
+
+If you worked through all these steps, you're almost good to go.
+I have some further recommendations to make your life easier.
+
+#### byobu
+
+`byobu` is a wrapper for your ssh session that makes it possible to close your window and not loose the command running in it.
+If you start large scripts, you can safely start them in a `byobu` window and do not need to fear that they will quit once your shut down your laptop.
+
+Basically, all you need to do is (after logging in) to run `byobu` and it will switch on a `byobu` session for you.
+
+You can open multiple ones with `byobu -S`. 
+Once you have multiple ones open, an interacive prompt will ask you which one you want to start next time.
+
+#### radian
+
+`radian` is an optimized wrapper for the R command line. 
+You will notice the benefits compared to the default `R` once you start using it.
+You need to install it via `pip`.
+
+```sh
+spack load py-pip
+pip install --user radian
+```
+
+Now you can either always use `radian` or set an alias in your `.bashrc` , e.g. `alias r="radian"`.
+
+#### ccache
+
+If you load `ccache` with Spack, you will speedup source installations of R packages a lot.
+(On Linux, all R packages are installed from source.)
+Besides loading `ccache`, you also need to create the following file in your home directory (`~/.R/Makevars`):
+
+```sh
+VER=
+CCACHE=ccache
+CC=$(CCACHE) gcc -std=gnu11 $(VER)
+CXX=$(CCACHE) g++$(VER)
+C11=$(CCACHE) g++$(VER)
+C14=$(CCACHE) g++$(VER)
+FC=$(CCACHE) gfortran$(VER)
+F77=$(CCACHE) gfortran$(VER)
+```
+
+When installing a package now, you will occasionally see that the `gcc` lines are prefixed with `ccache`.
+This means that this `gcc` call was already executed once and is now loaded from the cache rathern than being run again.
+This saves a lot of time, especially for packages that take long to install (`dplyr`, `Rcpp`, `stringi`).
+
+#### Create a wrapper for your project
+
+Usually you might want to use a `packrat` library in a specific directory with a specific R version.
+Rather than navigating there all the time by hand and loading the R version via spack, you can create an alias that does this for you.
+
+```
+alias my-project="cd /path/to/project && spack load r@<version> && radian"
+```
+
+Put this in your `.bashrc` and save time :)
