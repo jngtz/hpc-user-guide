@@ -73,7 +73,6 @@ spack load gdal@2.4.0
 spack load geos@3.6.2
 spack load proj@5.0.1
 spack load udunits2
-spack load r@3.5.2
 ```
 
 Furthermore, I recommend the following ones:
@@ -85,7 +84,12 @@ spack load neovim # editor
 spack load ccache #faster package installation
 ```
 
-
+You might wonder why you shouldn't add a R version to this list?
+The answer is that it will conflict with RStudio-Server.
+Whenever opening a session, your `~/.bashrc` file is sourced.
+If you specify R there, it will always override what is specified in the RStudio-Server settings related to R-versions.
+So yes, you always need to specifically load R when logging into a new session.
+However, there is a small trick to save you some time - check out section [create a wrapper for your project](#wrapper).
 
 ## R
 
@@ -149,7 +153,7 @@ When installing a package now, you will occasionally see that the `gcc` lines ar
 This means that this `gcc` call was already executed once and is now loaded from the cache rathern than being run again.
 This saves a lot of time, especially for packages that take long to install (`dplyr`, `Rcpp`, `stringi`).
 
-#### Create a wrapper for your project
+#### Create a wrapper for your project {#wrapper}
 
 Usually you might want to use a `packrat` library in a specific directory with a specific R version.
 Rather than navigating there all the time by hand and loading the R version via spack, you can create an alias that does this for you.
