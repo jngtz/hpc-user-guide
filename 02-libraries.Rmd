@@ -106,7 +106,7 @@ Fortunately, there is a small trick to save some time - check out section [creat
 
 ## R
 
-All versiosn from v3.4.3 upwards are installed.
+All versions from v3.4.4 upwards are installed.
 Query them with `spack find r` and load a specific one with `spack load r@3.5.1`.
 
 ## RStudio Server
@@ -172,6 +172,8 @@ This saves a lot of time, especially for packages that take long to install (`dp
 
 Usually you might want to use a `packrat` library in a specific directory with a specific R version.
 Rather than navigating there all the time by hand and loading the R version via spack, you can create an alias that does this for you.
+You can of course also use this approach without packrat, just to load a specific version. 
+This saves you typing `spack load r<version>`.
 
 ```
 alias my-project="cd /path/to/project && spack load r@<version> && radian"
