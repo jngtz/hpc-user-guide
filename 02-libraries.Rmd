@@ -45,9 +45,17 @@ Usually it is best practive to also specify the version.
 Omitting it will work unless there are multiple versions of a library available.
 This will be the default very soon when the libraries are upgraded.
 Don't worry, the old version will stay available.
-That is one of the advantages of spack.
+That is one of the advantages of Spack.
 
-For example, to have GDAL available to the following:
+First, you need to load a C compiler as most programs depend on it:
+
+```
+spack load gcc@7.3.0
+```
+
+(We use this version as `gcc@8.2.0` throwed an error when compiling R.)
+
+Now you can for example load GDAL:
 
 ```sh
 spack load gdal@2.4.0
