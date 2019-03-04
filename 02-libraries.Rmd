@@ -136,14 +136,17 @@ Once you have multiple ones open, an interacive prompt will ask you which one yo
 
 `radian` is an optimized wrapper for the R command line. 
 You will notice the benefits compared to the default `R` once you start using it.
-You need to install it via `pip`.
+You need to install it via `pip` which is already installed if you installed `python`.
+
+Usually `setuptools` needs to be upgraded first.
 
 ```sh
-spack load py-pip
+pip install --user --upgrade setuptools
 pip install --user radian
 ```
 
 Now you can either always use `radian` or set an alias in your `.bashrc` , e.g. `alias r="radian"`.
+Note that `radian` only works if you have loaded R before via Spack.
 
 #### ccache
 
