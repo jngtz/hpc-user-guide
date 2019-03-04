@@ -77,13 +77,17 @@ Simply add them to `~/.bashrc`.
 When running R for spatial analysis, the following are required:
 
 ```sh
-spack load gdal@2.4.0
-spack load geos@3.6.2
-spack load proj@5.0.1
-spack load udunits2
+spack load gdal@2.4.0 %gcc@7.3.0
+spack load geos@3.6.2 %gcc@7.3.0
+spack load proj@5.0.1 %gcc@7.3.0
+spack load udunits2@2.2.24 %gcc@7.3.0
 ```
 
-Furthermore, I recommend the following ones:
+(It is not strictly required to load a specfic version including a compiler.
+However, if multiple versions / compilers are installed there will be conficts.
+So this explicit approach of loading the packages is the most robust one.)
+
+Furthermore, I recommend the following ones (don't forget to append your version and compiler):
 
 ```sh
 spack load git # version control
@@ -97,7 +101,8 @@ The answer is that it will conflict with RStudio-Server.
 Whenever opening a session, your `~/.bashrc` file is sourced.
 If you specify R there, it will always override what is specified in the RStudio-Server settings related to R-versions.
 So yes, you always need to specifically load R when logging into a new session.
-However, there is a small trick to save you some time - check out section [create a wrapper for your project](#wrapper).
+Also make sure that `GDAL` and friends are loaded in your `.bashrc` file as otherwise RStudio Server will say it cannot find them.
+Fortunately, there is a small trick to save some time - check out section [create a wrapper for your project](#wrapper).
 
 ## R
 
