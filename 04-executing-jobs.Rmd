@@ -48,10 +48,9 @@ cd path/to/project
 
 spack load r@<version>
 
-CMQ_AUTH={{ auth }}
+# add more spack libraries here
 
-# make sure to set the desired R version
-R --no-save --no-restore -e 'clustermq:::worker("{{ master }}")'
+CMQ_AUTH={{ auth }} R --no-save --no-restore -e 'clustermq:::worker("{{ master }}")'
 ```
 
 Note: The `#` signs are no mistakes here, they are no "comment" signs in this context. 
