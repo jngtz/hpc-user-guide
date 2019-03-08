@@ -117,6 +117,14 @@ RStudio Server is running at port 8787 (10.35.158.19:8787).
 
 If you cannot find your library using `spack find`, please contact Patrick.
 
+For your information, GDAL was built with the following driver support:
+
+```
++curl +geos +armadillo +jpeg +openjpeg +netcdf +png +pg +sqlite3 +xml2
+```
+
+Check `spack info gdal` for more information.
+
 ## Getting Started
 
 If you worked through all these steps, you're almost good to go.
