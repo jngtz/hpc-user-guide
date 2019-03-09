@@ -1,6 +1,6 @@
 # Libraries and Modules {#libraries}
 
-test
+test2
 
 ## Adding Spack to your shell
 
