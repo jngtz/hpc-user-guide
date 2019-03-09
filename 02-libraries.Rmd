@@ -1,5 +1,7 @@
 # Libraries and Modules {#libraries}
 
+test
+
 ## Adding Spack to your shell
 
 Most system relevant libraries are installed via [Spack](spack.io).
