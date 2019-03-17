@@ -113,7 +113,7 @@ Query them with `spack find r` and load a specific one with `spack load r@3.5.1`
 
 RStudio Server is running at port 8787 (10.35.158.19:8787).
 
-## Scientific Libraries
+## Libraries
 
 If you cannot find your library using `spack find`, please contact Patrick.
 
@@ -124,6 +124,12 @@ For your information, GDAL was built with the following driver support:
 ```
 
 Check `spack info gdal` for more information.
+
+### Docker
+
+Docker is installed on the frontend only (for example to convert .html to .pdf).
+To use `docker`, your user needs to be added to the "docker" group.
+Please contact an Admin in case you want to use it.
 
 ## Getting Started
 
