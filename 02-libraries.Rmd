@@ -109,6 +109,14 @@ Query them with `spack find r` and load a specific one with `spack load r@3.5.1`
 RStudio Server is running at port 8787 (141.35.158.107:8787).
 SSL certificate is coming soon (so we can have a https connection).
 
+## Shiny Server
+
+Is not yet useable because Shiny Server requires an R interpreter being available on a user basis when starting an application. 
+This would mean that we need to load R in `~/.bashrc`. 
+However, this would conflict with RStudio Server then.
+
+TBC.
+
 ## Libraries
 
 If you cannot find a library you want to use using `spack find`, please contact an Admin.
