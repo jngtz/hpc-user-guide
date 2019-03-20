@@ -38,33 +38,44 @@ A working SSH setup is also requiered if you want to use the [SSH way](#ssh-mode
 
 ## Web Address
 
-* gisc.ads.uni-jena.de (short for GIS cluster)
-* IP: 10.35.158.19
+* edi.ads.uni-jena.de
+* IP: 141.35.158.107
 
 ## Hardware
 
-Each node of the HPC has the following hardware:
+The cluster consists of multiple compute node groups.
 
-- CPU: Threadripper 2950X, 16-core, 3.5 GHz - 4.4 GHz
+The newest group of compute nodes has the following specifications:
+
+- CPU: AMD Threadripper 2950X, 16-core, 3.5 GHz - 4.4 GHz
 - RAM: 126 GB DDR4 
 - 1 TB M2 SSD
+- Number of nodes: 3
 
-Currently, three nodes are available for processing. 
-The master node (which will be referred to as the _system management server_ (SMS) from here on) is currently not used as it is hosting the _Rstudio Server_ application.
-Depending on the load, we might also add it as a computing node in the future.
+The master node also belongs to this group.
+Due to management overhead, only 8 cores (16 CPUs) can be used.
+
+The second group of computes has the following specs:
+
+- CPU: AMD Opteron 6172
+- RAM: 128 GB DDR3 (1.3 Mhz)
+- Number of nodes: 4
+
+Group X is about 3.5 times faster than group Y. If no jobs are running, new jobs will always be started on group X.
+
+TODO: Name node groups
 
 ## Software
 
-The HPC was built following the installation guide provided by the [Open HPC](https://openhpc.community/) community (using the "Warewulf + Slurm" edition).
-It is currently running on a CentOS 7.6 operating system using the CentOS main-line Kernel (currently at version 4.20).
+The HPC was built following the installation guide provided by the [Open HPC](https://openhpc.community/) community (using the "Warewulf + Slurm" edition).  
+It is currently running on a CentOS 7.6 operating system using the CentOS main-line Kernel (currently at version 4.20).  
 The scheduler that is used for queuing processing job requests is [SLURM](https://slurm.schedmd.com/).
 Load monitoring is performed via [Ganglia](http://ganglia.sourceforge.net/). 
-A live view is accessable [here](http://10.35.158.19/ganglia/?r=hour&cs=&ce=&m=load_one&s=by+name&c=&tab=m&vn=&hide-hf=false).
-[Spack][https://spack.io/] is used as the package manager.
+A live view is accessable [here](http://edi.geogr.uni-jena.de/ganglia/?r=hour&cs=&ce=&m=load_one&s=by+name&c=&tab=m&vn=&hide-hf=false).  
+[Spack](https://spack.io/) is used as the package manager.
 More detailed instructions on the scheduler and the package manager can be found in their respective chapters.
 
 ## Data storage
 
-The data storage mount will be located at `/mnt/data` (via NFS).
-You are free to choose whether the server will be your primary working location holding all your scripts (and data) or whether you want to keep your scripts locally at your machine.
-If you use the [SSH way](#ssh-mode) to execute jobs on the HPC, you do not even need to login to the server to be able to run your scripts.
+Currently all data is written to the 1 TB SSD of the master node.
+The plan is to use our 54 TB data server for the `/home` directories so that we have enough space for everyone.
