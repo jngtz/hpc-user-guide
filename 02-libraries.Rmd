@@ -14,7 +14,7 @@ Here is a snapshot:
 ```sh
 spack find
 
--- linux-centos7-x86_64 / gcc@7.4.0 -----------------------------
+-- linux-centos7-x86_64 / gcc@7.3.0 -----------------------------
 autoconf@2.69              git@2.20.1                    libgpg-error@1.27     lz4@1.8.1.2      r@3.5.1
 automake@1.16.1            glib@2.56.3                   libiconv@1.15         lzo@2.09         r@3.5.2
 bison@3.0.5                gmake@4.2.1                   libjpeg-turbo@1.5.90  m4@1.4.18        readline@7.0
@@ -42,10 +42,7 @@ gettext@0.19.8.1           libgeotiff@1.4.2              lua-mpack@1.0.0-0     p
 
 Libraries can be loaded via `spack load <library>`.
 Usually it is best practive to also specify the version. 
-Omitting it will work unless there are multiple versions of a library available.
-This will be the default very soon when the libraries are upgraded.
-Don't worry, the old version will stay available.
-That is one of the advantages of Spack.
+Omitting it will work unless there are multiple versions of a library available (which is quite often the case).
 
 First, you need to load a C compiler as most programs depend on it:
 
@@ -55,18 +52,16 @@ spack load gcc@7.3.0
 
 (We use this version as `gcc@8.2.0` throwed an error when compiling R.)
 
-Now you can for example load GDAL:
+Now you can (for example) load GDAL:
 
 ```sh
-spack load gdal@2.4.0
+spack load gdal@2.3.3
 ```
 
 You can check if it worked via 
 
 ```sh
 gdalinfo --version
-
-GDAL 2.4.0, released 2018/12/14
 ```
 
 ## Default libraries
@@ -77,15 +72,15 @@ Simply add them to `~/.bashrc`.
 When running R for spatial analysis, the following are required:
 
 ```sh
-spack load gdal@2.4.0 %gcc@7.3.0
+spack load gdal@2.3.3 %gcc@7.3.0
 spack load geos@3.6.2 %gcc@7.3.0
 spack load proj@5.0.1 %gcc@7.3.0
 spack load udunits2@2.2.24 %gcc@7.3.0
 ```
 
-(It is not strictly required to load a specfic version including a compiler.
+(It is not strictly required to load a specfic version with the specification of a compiler.
 However, if multiple versions / compilers are installed there will be conficts.
-So this explicit approach of loading the packages is the most robust one.)
+So this explicit approach of loading a package is the most robust one.)
 
 Furthermore, I recommend the following ones (don't forget to append your version and compiler):
 
@@ -99,7 +94,7 @@ spack load ccache #faster package installation
 You might wonder why you shouldn't add a R version to this list?
 The answer is that it will conflict with RStudio-Server.
 Whenever opening a session, your `~/.bashrc` file is sourced.
-If you specify R there, it will always override what is specified in the RStudio-Server settings related to R-versions.
+If you specify an R version there, it will always override what is specified in the RStudio-Server settings related to R-versions.
 So yes, you always need to specifically load R when logging into a new session.
 Also make sure that `GDAL` and friends are loaded in your `.bashrc` file as otherwise RStudio Server will say it cannot find them.
 Fortunately, there is a small trick to save some time - check out section [create a wrapper for your project](#wrapper).
@@ -111,16 +106,17 @@ Query them with `spack find r` and load a specific one with `spack load r@3.5.1`
 
 ## RStudio Server
 
-RStudio Server is running at port 8787 (10.35.158.19:8787).
+RStudio Server is running at port 8787 (141.35.158.107:8787).
+SSL certificate is coming soon (so we can have a https connection).
 
 ## Libraries
 
-If you cannot find your library using `spack find`, please contact Patrick.
+If you cannot find a library you want to use using `spack find`, please contact an Admin.
 
-For your information, GDAL was built with the following driver support:
+GDAL was built with the following driver support:
 
 ```
-+curl +geos +armadillo +jpeg +openjpeg +netcdf +png +pg +sqlite3 +xml2
++armadillo+cfitsio+crypto+cryptopp+curl+expat+geos+gif~grib~hdf4~hdf5+jasper+java+jpeg~kea+libiconv+liblzma+libtool+libz+mdb+netcdf~odbc~opencl+openjpeg+pcre+perl+pg+png+poppler+proj+python+qhull+sosi+sqlite3+xerces+xml2+zstd
 ```
 
 Check `spack info gdal` for more information.
@@ -143,7 +139,7 @@ If you start large scripts, you can safely start them in a `byobu` window and do
 
 Basically, all you need to do is (after logging in) to run `byobu` and it will switch on a `byobu` session for you.
 
-You can open multiple ones with `byobu -S`. 
+You can open multiple ones with `byobu -S <session name>`. 
 Once you have multiple ones open, an interacive prompt will ask you which one you want to start next time.
 
 #### radian
@@ -160,11 +156,14 @@ pip install --user radian
 ```
 
 Now you can either always use `radian` or set an alias in your `.bashrc` , e.g. `alias r="radian"`.
-Note that `radian` only works if you have loaded R before via Spack.
+Note that `radian` only works if you have loaded R before via Spack as the `R_HOME` directory needs to be exported beforehand.
+
+Sometimes you might run into some problems when using `radian`.
+To debug, first try with the default R interpreter by just using `R` in the terminal.
 
 #### ccache
 
-If you load `ccache` with Spack, you will speedup source installations of R packages a lot.
+If you load `ccache` with Spack, you will speed-up source installations of R packages a lot.
 (On Linux, all R packages are installed from source.)
 Besides loading `ccache`, you also need to create the following file in your home directory (`~/.R/Makevars`):
 
@@ -197,3 +196,5 @@ alias my-project="cd /path/to/project && spack load r@<version> && radian"
 ```
 
 Put this in your `.bashrc` and save time :)
+
+Note that you also might want to add other libraries in this chain to have them available in your R session (if you haven't already loaded them in your `~/.bashrc` file).
