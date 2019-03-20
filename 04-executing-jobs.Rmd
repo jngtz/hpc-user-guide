@@ -61,7 +61,7 @@ You can simply copy it and adjust it to your needs (set the right path to your p
 ## Allocating resources
 
 When submitting jobs via `clustermq::Q()`, it is important to tell the scheduler how many cores should be reserved via the `n_jobs` argument.
-If omitted, the scheduler will plan with 1 core (= sequential execution) although your submitted code will eventually spawn multiple workers along the process.
+If omitted, the scheduler will plan with one core (= sequential execution) although your submitted code will eventually spawn multiple workers along the process.
 
 There are two ways to specify this setting, depending on which approach you use:
 
@@ -91,11 +91,13 @@ If you scale down the number of cpus, you will have more memory/cpu available.
 
 When submitting jobs you can track its progress by specifying a `log_file` in the `clustermq::Q()` call, e.g. `clustermq::Q(template = list(log_file = path/to/file))`.
 
-If your jobs are running on a node, you can SSH into it, e.g. `ssh c0`.
+For `drake`, the equivalent is to specify `console_log_file()` in either `make()` or `drake_config()`.
+
+If your jobs are running on a node, you can SSH into the node, e.g. `ssh c0`.
 In the node you can take a look at the current load by using `htop`.
 Note that you can only login if you have a running progress in a specific node.
 
-Furthermore you can take a look [Ganglia](http://10.35.158.19/ganglia/?r=hour&cs=&ce=&m=load_one&s=by+name&c=OpenHPC&tab=m&vn=&hide-hf=false) to see the load of the HPC.
+Another option is to take a look [Ganglia](http://141.35.158.107/ganglia/?r=hour&cs=&ce=&m=load_one&s=by+name&c=OpenHPC&tab=m&vn=&hide-hf=false) to see the load of the HPC.
 
 ## Summary
 
@@ -104,9 +106,7 @@ Furthermore you can take a look [Ganglia](http://10.35.158.19/ganglia/?r=hour&cs
 - `drake::make(parallelism = "clustermq", n_jobs = 1, template = list(n_cpus = X, log_file = Y))` (recommended!)
 - `clustermq::Q(template = list(n_cpus = X, log_file = Y))`
 
-Both can be used from your local machine (SSH) or from the master node (recommended!).
-
-2. You need to have a Slurm template file in your project directory. This template needs to be referrended in your `.Rprofile` by `options(clustermq.template = "/path/to/file")`. The following settings are required:
+2. You need to have a Slurm template file in your project directory. This template needs to be linked in your `.Rprofile` with `options(clustermq.template = "/path/to/file")`. The following settings are required:
 
 - `R version`
 - `--cpus-per-task`
