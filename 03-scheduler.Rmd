@@ -5,7 +5,7 @@ In contrast to running a "direct" R job from the command line on a server withou
 This application takes care of the execution queue while accouting for other running processes.
 
 In R, this is done via the R packages [rzmq](https://github.com/ropensci/rzmq) and [clustermq](https://github.com/mschubert/clustermq).
-Both packages provide interfaces for the [zmq](http://zeromq.org/) library which in fact is doing the work of sending code requests of any languate to SLURM.
+Both packages provide interfaces for the [zmq](http://zeromq.org/) library which in fact is doing the work of sending code requests of any language to SLURM.
 While the _rzmq_ package is the technical interface to `zmq` in this combination, the _clustermq_ package is used by the user to start the pipeline of submitting a job to the scheduler.
 
 ## First steps
@@ -25,7 +25,7 @@ Is is highly recommended that you set up an [SSH key](https://www.digitalocean.c
 If you do not want to use [drake](https://github.com/ropensci/drake), you can also use `clustermq::Q()` directly.
 And no, there is no other way to submit your jobs to the compute nodes of the cluster as these can only be accessed via SLURM.
 
-See also the section [best-practice](#best-practice) for more information on how to get started.
+See also the section [best practice](#best-practice) for more information on how to get started.
 
 ## Slurm commands
 
