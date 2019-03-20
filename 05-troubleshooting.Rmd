@@ -2,17 +2,12 @@
 
 ## Known Issues
 
-- The HPC can currently only be reached via its IP (10.35.158.19) as the domain name is not yet registered at the URZ.
-
 - The "data storage" is not mounted yet.
 
-FAQ will appear here.
+- Sometimes the graphic device is not accessible in an R session. This currently happens without a clear pattern and it is not clear yet which system library (or maybe a sequence of loading R packages) is causing it.
 
 ## Cautionary Notes
 
-When writing files to disk, do not submit the job via SSH.
-This is due to the fact that computations are done in memory via SSH and the resultung object is also returned in memory.
-The cluster cannot write to a remote disk but only to its own file system.
 
 ## FAQ
 
