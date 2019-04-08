@@ -42,6 +42,7 @@ For example, one of my templates looks like this:
 #SBATCH --output={{ log_file | /dev/null }} # you can add .%a for array index
 #SBATCH --error={{ log_file | /dev/null }}
 #SBATCH --cpus-per-task={{ n_cpus }}
+#SBATCH --mem={{ memory }}
 #SBATCH --array=1-{{ n_jobs }}
 
 cd path/to/project
@@ -60,31 +61,39 @@ You can simply copy it and adjust it to your needs (set the right path to your p
 
 ## Allocating resources
 
-When submitting jobs via `clustermq::Q()`, it is important to tell the scheduler how many cores should be reserved via the `n_jobs` argument.
-If omitted, the scheduler will plan with one core (= sequential execution) although your submitted code will eventually spawn multiple workers along the process.
+When submitting jobs via `clustermq::Q()`, it is important to tell the scheduler how many cores and memory should be reserved for you.
+This step is very important.
+If you specify less cores than you actually use in your script (e.g. by internal parallelization), the scheduler will plan with X cores although your submitted code will spawn Y processes in the background.
+This might overload the node and eventually cause your script (and more importantly) the processes of others to crash.
 
-There are two ways to specify this setting, depending on which approach you use:
+There are two ways to specify these settings, depending on which approach you use:
 
 1. via `clustermq::Q()` directly
 
-Here you can directly set the `n_cpus` argument to the desired value. 
-It will then be passed to the `slurm_clustermq.tmpl` file which has a line containing `#SBATCH --cpus-per-task{{ n_cpus }}`.
+Pass the values via argument `template` like `template = list(n_cpus = X, memory = Y)`.
+It will then be passed to the `slurm_clustermq.tmpl` file which has the following lines:
+
+```sh
+#SBATCH --cpus-per-task{{ n_cpus }}
+#SBATCH --mem={{ memory }}
+```
+
 This tells the scheduler how many resources (here cpus) your job needs.
-Note that the maximum number is `n_cpus = 32` as processes cannot be split across nodes.
+Note that the maximum values are `n_cpus = 32` and `memory = 126000` per node.
 
 2. via `drake::make()` (recommended)
 
-In `drake::make()` you can set this option via the argument `template = list(n_cpus = X)`.
+Again, set the options via argument `template = list(n_cpus = X, memory = Y)`.
 See section ["The resources column for transient workers"](https://ropenscilabs.github.io/drake-manual/hpc.html#advanced-options) in the drake manual.
 
 ```{block, type='rmdcaution'}
-Please think upfront how many cpus your task requires. 
+Please think upfront how many cpus and memory your task requires. 
 If you use something like `mclapply(cores = 20)` but set `n_cpus` in the Slurm template to 16, you will just get 16 cpus.
 The remaining 4 workers are spawned but will always be in "waiting mode" as you only requested 16 cores.
+However the additional workers spawned might cause other people to be placed in the queue rather than getting their processes started directly.
 ```
 
-Furthermore, if you want to use all ressources of a node and run into memory problems, try reducing the number of cpus.
-Each node has 126 GB RAM available which gets split up to the nodes. 
+Furthermore, if you want to use all resources of a node and run into memory problems, try reducing the number of cpus (if you already increased the memory to its maximum).
 If you scale down the number of cpus, you will have more memory/cpu available.
 
 ## Monitoring progress
@@ -103,20 +112,15 @@ Another option is to take a look [Ganglia](http://141.35.158.107/ganglia/?r=hour
 
 1. Decide which approach you want to use
 
-- `drake::make(parallelism = "clustermq", n_jobs = 1, template = list(n_cpus = X, log_file = Y))` (recommended!)
-- `clustermq::Q(template = list(n_cpus = X, log_file = Y))`
+- `drake::make(parallelism = "clustermq", n_jobs = 1, template = list(n_cpus = X, log_file = Y, memory = Z))` (recommended!)
+- `clustermq::Q(template = list(n_cpus = X, log_file = Y, memory = Z))`
 
-2. You need to have a Slurm template file in your project directory. This template needs to be linked in your `.Rprofile` with `options(clustermq.template = "/path/to/file")`. The following settings are required:
-
-- `R version`
-- `--cpus-per-task`
-- `--log_file`
-- A `cd` command pointing to your project directory
+2. You need to have a Slurm template file in your project directory. This template needs to be linked in your `.Rprofile` with `options(clustermq.template = "/path/to/file")`.
 
 ## Best practice {#best-practice}
 
 If you submit a job, you submit it to ONE node.
-You can submit as many tasks as you want in separate R sessios, they will be processed as ranked in the queue of the scheduler.
+You can submit as many tasks as you want in separate R sessions, they will be processed as ranked in the queue of the scheduler.
 However, submitting single jobs that finish quickly is tedious.
 The same applies to the submission of multiple jobs in separate R sessions.
 
@@ -127,14 +131,17 @@ You can specify any number of targets that should be build when calling `drake::
 
 For example, if you want to build three R objects named `object1`, `object2` and `object3` in parallel, one on each node:
 
-`drake::make(plan, targets = c("object1", "object2", "object3"), jobs = 3, template = list(n_cpus = 16, log_file = "/path/to/log.txt"))`
+```r
+drake::make(plan, targets = c("object1", "object2", "object3"), jobs = 3, 
+            template = list(n_cpus = 16, memory = 320000, 
+            log_file = "/path/to/log.txt"))
+```
 
 - Creates three jobs which are added to the Slurm queue
 - Each jobs requires 16 cores
-- The job is finished once all targets have been built.
+- Each job needs 32 GB of memory
+- The call is finished once all jobs have finished.
 
-After they are finished, they will be marked as "built" and added to a cache directory by `drake`, so you cannot accidentally rebuild them (unless you change somehting substantial in the code).
+After they are done, they will be marked as "built" and added to a cache directory by `drake`, so you cannot accidentally rebuild them (unless you change something substantial in the code).
 
-If you follow this practive, the only thing you need to execute on the cluster will be this call (after you initialized the config by sourcing your `drake.R` file).
-
-
+If you follow this practice, the only thing you need to execute on the cluster will be this call (after you initialized the config by sourcing your `drake.R` file).
