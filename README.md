@@ -1,10 +1,7 @@
-The repository holds the sources for the `HPC user guide`.
+The repository holds the sources for the [HPC user guide](http://www.geoinf.uni-jena.de/~bi28yuv/gisc-user-guide/).
 
-Compilation is done via [bookdown](https://github.com/rstudio/bookdown).
+It is written as [bookdown](https://github.com/rstudio/bookdown) e-book.
 Publish directory is `_book`.
 
-test
-
-Copy to copy the public files to the web server: `cp -r ~/git/gisc-user-guide/_book/* /mnt/geoinf_web/bi28yuv/gisc-user-guide` (only for Patrick)
-
-test
+Currently the site is published on the web instance of the "unstrut" server.
+However, it should be moved to "Jupiter" soon featuring a proper https address.
