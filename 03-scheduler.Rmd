@@ -2,7 +2,7 @@
 
 [SLURM](https://slurm.schedmd.com/) is responsible for executing jobs across the cluster.
 In contrast to running a "direct" R job from the command line on a server without a scheduler.
-This application takes care of the execution queue while accouting for other running processes.
+This application takes care of the execution queue while accounting for other running processes.
 
 In R, this is done via the R packages [rzmq](https://github.com/ropensci/rzmq) and [clustermq](https://github.com/mschubert/clustermq).
 Both packages provide interfaces for the [zmq](http://zeromq.org/) library which in fact is doing the work of sending code requests of any language to SLURM.
@@ -14,7 +14,7 @@ Rather than just calling a R script, you need to wrap your code into a function 
 While at first this might look like a more complex way to run R code than just executing it at the command line, you will experience the benefits of this way along the path:
 
 - By being forced to "functionize" your code and putting in into smaller pieces, you'll diverge from long R scripts
-- In combination with [drake](https://github.com/ropensci/drake) you are able to reprodcible track already built targets and parallelize the building of intermediate targets
+- In combination with [drake](https://github.com/ropensci/drake) you are able to reproducible track already built targets and parallelize the building of intermediate targets
 
 [drake](https://github.com/ropensci/drake) provides an interface to `clustermq` giving you the possibility of running multiple "targets" (which you can think of as one R script or one intermediate step) in parallel on the HPC.
 These "targets" can again be parallelized.

@@ -41,7 +41,7 @@ gettext@0.19.8.1           libgeotiff@1.4.2              lua-mpack@1.0.0-0     p
 ## Loading libraries
 
 Libraries can be loaded via `spack load <library>`.
-Usually it is best practive to also specify the version. 
+Usually it is best practice to also specify the version. 
 Omitting it will work unless there are multiple versions of a library available (which is quite often the case).
 
 First, you need to load a C compiler as most programs depend on it:
@@ -78,8 +78,8 @@ spack load proj@5.0.1 %gcc@7.3.0
 spack load udunits2@2.2.24 %gcc@7.3.0
 ```
 
-(It is not strictly required to load a specfic version with the specification of a compiler.
-However, if multiple versions / compilers are installed there will be conficts.
+(It is not strictly required to load a specific version with the specification of a compiler.
+However, if multiple versions / compilers are installed there will be conflicts.
 So this explicit approach of loading a package is the most robust one.)
 
 Furthermore, I recommend the following ones (don't forget to append your version and compiler):
@@ -111,7 +111,7 @@ SSL certificate is coming soon (so we can have a https connection).
 
 ## Shiny Server
 
-Is not yet useable because Shiny Server requires an R interpreter being available on a user basis when starting an application. 
+Is not yet usable because Shiny Server requires an R interpreter being available on a user basis when starting an application. 
 This would mean that we need to load R in `~/.bashrc`. 
 However, this would conflict with RStudio Server then.
 
@@ -148,7 +148,7 @@ If you start large scripts, you can safely start them in a `byobu` window and do
 Basically, all you need to do is (after logging in) to run `byobu` and it will switch on a `byobu` session for you.
 
 You can open multiple ones with `byobu -S <session name>`. 
-Once you have multiple ones open, an interacive prompt will ask you which one you want to start next time.
+Once you have multiple ones open, an interactive prompt will ask you which one you want to start next time.
 
 #### radian
 
@@ -189,7 +189,7 @@ F77=$(CCACHE) gfortran$(VER)
 ```
 
 When installing a package now, you will occasionally see that the `gcc` lines are prefixed with `ccache`.
-This means that this `gcc` call was already executed once and is now loaded from the cache rathern than being run again.
+This means that this `gcc` call was already executed once and is now loaded from the cache rather than being run again.
 This saves a lot of time, especially for packages that take long to install (`dplyr`, `Rcpp`, `stringi`).
 
 #### Create a wrapper for your project {#wrapper}
