@@ -106,8 +106,7 @@ Query them with `spack find r` and load a specific one with `spack load r@3.5.1`
 
 ## RStudio Server
 
-RStudio Server is running at port 8787 (141.35.158.107:8787).
-SSL certificate is coming soon (so we can have a https connection).
+RStudio Server Pro is running on port 8787 (https://edi.geogr.uni-jena.de:8787).
 
 ## Shiny Server
 
