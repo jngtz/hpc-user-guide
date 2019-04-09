@@ -38,7 +38,7 @@ A working SSH setup is also requiered if you want to use the [SSH way](#ssh-mode
 
 ## Web Address
 
-* edi.ads.uni-jena.de
+* edi.geogr.uni-jena.de
 * IP: 141.35.158.107
 
 ## Hardware
