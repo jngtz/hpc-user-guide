@@ -1,1 +1,3 @@
+#!/bin/bash
+
 rsync -rlptDvzog --chown=www-data:www-data --fake-super ~/git/gisc-user-guide/_book/* -e ssh patrick@jupiter.geogr.uni-jena.de:/home/www/hpc/
