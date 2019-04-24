@@ -44,7 +44,8 @@ Libraries can be loaded via `spack load <library>`.
 Usually it is best practice to also specify the version. 
 Omitting it will work unless there are multiple versions of a library available (which is quite often the case).
 
-First, you need to load a C compiler as most programs depend on it:
+First, you need to load a C compiler as most programs depend on it.
+Make sure to also put this one into your `~/.bashrc` file!
 
 ```
 spack load gcc@7.3.0
