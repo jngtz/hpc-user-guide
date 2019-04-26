@@ -111,11 +111,15 @@ RStudio Server Pro is running on port 8787 (https://edi.geogr.uni-jena.de:8787).
 
 ## Shiny Server
 
-Is not yet usable because Shiny Server requires an R interpreter being available on a user basis when starting an application. 
-This would mean that we need to load R in `~/.bashrc`. 
-However, this would conflict with RStudio Server then.
+Shiny server is running on port 3838 with user support.
+This means users can place apps in `$HOME/Shinyapps/` and they will be deployed as `http://edi.geogr.uni-jena.de:3838/<username>/<appname>`.
 
-TBC.
+Note the `http` (`https` is only available in the Pro version).
+
+Exemplary apps:
+
+- http://edi.geogr.uni-jena.de:3838/patrick/hyperspectral/
+- http://edi.geogr.uni-jena.de:3838/jannes/cluster_map/
 
 ## Libraries
 
