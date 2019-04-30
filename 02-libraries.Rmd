@@ -139,6 +139,13 @@ Docker is installed on the frontend only (for example to convert .html to .pdf).
 To use `docker`, your user needs to be added to the "docker" group.
 Please contact an Admin in case you want to use it.
 
+### OSRM
+
+[Open Source Routing Machine](https://github.com/Project-OSRM/osrm-backend) is installed.
+
+Start the server with `osrm-routed`.  
+More information can be found [here](https://github.com/Project-OSRM/osrm-backend/wiki/Running-OSRM).
+
 ## Getting Started
 
 If you worked through all these steps, you're almost good to go.
