@@ -3,7 +3,7 @@
 ## `clustermq` setup
 
 Every job submission is done via `clustermq::Q()` (either directly or via `drake`). 
-See the setup instructions in the [clustermq](https://github.com/mschubert/clustermq/wiki) package on how to setup the package.
+See the setup instructions in the [clustermq](https://mschubert.github.io/clustermq/) package on how to setup the package.
 
 First, you need to set some options in your `.Rprofile` (on the master node):
 
