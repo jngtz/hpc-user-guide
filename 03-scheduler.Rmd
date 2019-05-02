@@ -11,10 +11,11 @@ While the _rzmq_ package is the technical interface to `zmq` in this combination
 ## First steps
 
 Rather than just calling a R script, you need to wrap your code into a function and invoke it using `clustermq::Q()`.
-While at first this might look like a more complex way to run R code than just executing it at the command line, you will experience the benefits of this way along the path:
+At first this might seem to be a more complex way to run R code than the interactive line-by-line approach at the command line.
+But with time you will value the benefits of this approach:
 
 - By being forced to "functionize" your code and putting in into smaller pieces, you'll diverge from long R scripts
-- In combination with [drake](https://github.com/ropensci/drake) you are able to reproducible track already built targets and parallelize the building of intermediate targets
+- In combination with [drake](https://github.com/ropensci/drake) you are able to reproducibly track already built targets and parallelize the building of intermediate targets
 
 [drake](https://github.com/ropensci/drake) provides an interface to `clustermq` giving you the possibility of running multiple "targets" (which you can think of as one R script or one intermediate step) in parallel on the HPC.
 These "targets" can again be parallelized.
@@ -23,7 +24,7 @@ For more information see the [drake manual](https://ropenscilabs.github.io/drake
 Is is highly recommended that you set up an [SSH key](https://www.digitalocean.com/community/tutorials/how-to-configure-ssh-key-based-authentication-on-a-linux-server) to login to the server to avoid having to type your password on every login/job submission.
 
 If you do not want to use [drake](https://github.com/ropensci/drake), you can also use `clustermq::Q()` directly.
-And no, there is no other way to submit your jobs to the compute nodes of the cluster as these can only be accessed via SLURM.
+And **no**, there is no other way to submit your jobs to the compute nodes of the cluster as these can only be accessed via SLURM.
 
 See also the section [best practice](#best-practice) for more information on how to get started.
 
