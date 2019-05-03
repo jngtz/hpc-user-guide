@@ -10,14 +10,17 @@ First, you need to set some options in your `.Rprofile` (on the master node):
 ```
 options(
     clustermq.scheduler = "slurm",
-    clustermq.template = "/path/to/file/below"
+    clustermq.template = "</path/to/file/below>"
 )
 ```
+
+`clustermq.template` should point to a `clustermq.template` file. 
+Take a look at the specific instructions in the respective [package vignette](https://mschubert.github.io/clustermq/articles/userguide.html#slurm).
 
 Note that you can have multiple `.Rprofile` files: One at the your home directory which is being used by your default R interpreter and one per project, at the root of your project directory.
 This enables you to use custom R versions for each project
 
-Once you did this, you should be able to run the [example](https://github.com/mschubert/clustermq) in the README of the _clustermq_ package.
+Once you did this, you should be able to run the [example](https://github.com/mschubert/clustermq) listed at the top of the README of the _clustermq_ package.
 It is a very simple example which finishes in a few seconds.
 If it does not work, you either did something wrong or the nodes are busy.
 Check with `sinfo` and `squeue`.
@@ -29,9 +32,9 @@ If you submit a job that is parallelized without telling the scheduler, the sche
 This will potentially affect all running processes on the server since the scheduler will accept more processing than it actually can take.
 ```
 
-## From the master node
+## The scheduler template
 
-If you start jobs from the master node, you need to set the `.Rprofile` options given above.
+To successfully submit jobs to the scheduler, you need to set the `.Rprofile` options given above.
 Note that you can add any bash commands into the scripts between the `SBATCH` section and the final R call.
 For example, one of my templates looks like this:
 
@@ -61,6 +64,25 @@ You can simply copy it and adjust it to your needs (set the right path to your p
 
 ## Allocating resources
 
+There are two approaches/packages you can use: 
+
+- `drake` (recommended)
+
+- `clustermq`
+
+```{r eval = FALSE}
+drake::make(parallelism = "clustermq", n_jobs = 1, 
+  template = list(n_cpus = <X>, log_file = <Y>, memory = <Z>))
+```
+
+```{r eval = FALSE}
+clustermq::Q(template = list(n_cpus = <X>, log_file = <Y>, memory = <Z>))
+```
+
+(The individual components of these calls are explained in more detail below.
+Note that `drake` uses `clustermq` under the hood. 
+Notations like `<X>` are meant to be read as placeholders, meaning you need to replace them with valid content.)
+
 When submitting jobs via `clustermq::Q()`, it is important to tell the scheduler how many cores and memory should be reserved for you.
 This step is very important.
 If you specify less cores than you actually use in your script (e.g. by internal parallelization), the scheduler will plan with X cores although your submitted code will spawn Y processes in the background.
@@ -88,13 +110,25 @@ See section ["The resources column for transient workers"](https://ropenscilabs.
 
 ```{block, type='rmdcaution'}
 Please think upfront how many cpus and memory your task requires. 
-If you use something like `mclapply(cores = 20)` but set `n_cpus` in the Slurm template to 16, you will just get 16 cpus.
-The remaining 4 workers are spawned but will always be in "waiting mode" as you only requested 16 cores.
-However the additional workers spawned might cause other people to be placed in the queue rather than getting their processes started directly.
+The following two examples show you the implications of wrong specifications.
 ```
 
-Furthermore, if you want to use all resources of a node and run into memory problems, try reducing the number of cpus (if you already increased the memory to its maximum).
-If you scale down the number of cpus, you will have more memory/cpu available.
+```{block, type='rmdcaution'}
+`mclapply(cores = 20)` > `n_cpus = 16`
+
+In this case, four workers will always be in "waiting mode" since only 16 cpus can be used by your resource request. 
+This slows down your parallelization but does no harm to other users. 
+```
+
+```{block, type='rmdcaution'}
+`mclapply(cores = 11)` < `n_cpus = 16`
+
+In this case, you reserve 16 CPUs from the machine but only use 11 at most. 
+This blocks five CPUs of the machine for no reason potentially causing other people to be added to the queue rather than getting their job processed immediately.
+```
+
+Furthermore, if you want to use all resources of a node and run into memory problems, try reducing the number of CPUs (if you already increased the memory to its maximum).
+If you scale down the number of CPUs, you will have more memory/cpu available.
 
 ## Monitoring progress
 
