@@ -17,10 +17,14 @@ options(
 `clustermq.template` should point to a `clustermq.template` file. 
 Take a look at the specific instructions in the respective [package vignette](https://mschubert.github.io/clustermq/articles/userguide.html#slurm).
 
-Note that you can have multiple `.Rprofile` files: One at the your home directory which is being used by your default R interpreter and one per project, at the root of your project directory.
-This enables you to use custom R versions for each project
+Note that you can have multiple `.Rprofile` files on your system:
 
-Once you did this, you should be able to run the [example](https://github.com/mschubert/clustermq) listed at the top of the README of the _clustermq_ package.
+1. Your default R interpreter will use the `.Rprofile` found in the home directory (`~/`).
+1. But you can also save an `.Rprofile` file in the root directory of a (RStudio) project. 
+
+This way you can use customized `.Rprofile` files specifically written for a certain project.
+
+Now you should be able to run the [example](https://github.com/mschubert/clustermq) at the top of the `README` of the _clustermq_ package.
 It is a very simple example which finishes in a few seconds.
 If it does not work, you either did something wrong or the nodes are busy.
 Check with `sinfo` and `squeue`.
@@ -93,7 +97,7 @@ There are two ways to specify these settings, depending on which approach you us
 1. via `clustermq::Q()` directly
 
 Pass the values via argument `template` like `template = list(n_cpus = X, memory = Y)`.
-It will then be passed to the `slurm_clustermq.tmpl` file which has the following lines:
+It will then be passed to the `clustermq.template` file (frequently named `slurm_clustermq.tmpl`) which contains following lines:
 
 ```sh
 #SBATCH --cpus-per-task{{ n_cpus }}
@@ -144,7 +148,10 @@ Another option is to take a look [Ganglia](http://141.35.158.107/ganglia/?r=hour
 
 ## Summary
 
-1. Decide which approach you want to use
+1. Set up your `.Rprofile` with `options(clustermq.template = "/path/to/file")`.
+  The `clustermq.template` should point to a slurm template file in your home or project directory.
+
+1. Decide which approach you want to use:
 
 - `drake::make(parallelism = "clustermq", n_jobs = 1, template = list(n_cpus = X, log_file = Y, memory = Z))` (recommended!)
 - `clustermq::Q(template = list(n_cpus = X, log_file = Y, memory = Z))`
