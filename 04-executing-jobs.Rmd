@@ -149,7 +149,7 @@ Another option is to take a look [Ganglia](http://141.35.158.107/ganglia/?r=hour
 ## Summary
 
 1. Set up your `.Rprofile` with `options(clustermq.template = "/path/to/file")`.
-  The `clustermq.template` should point to a slurm template file in your home or project directory.
+  The `clustermq.template` should point to a SLURM template file in your home or project directory.
 
 1. Decide which approach you want to use:
 

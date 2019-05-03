@@ -23,9 +23,9 @@ However, the following manual will focus on getting R code running.
 The big advantage of a HPC is that users can submit jobs to ONE remote server which then distributes the work across multiple machines in the background.
 Incoming processing requests (jobs) are handled by the installed scheduler (SLURM), taking away the work of scheduling the job and the fear of clashing with other users.
 The status of the job request can be queried easily.
-Administration is simpliefied by provisioning all compute nodes with the same virtual image.
+Administration is simplified by provisioning all compute nodes with the same virtual image.
 This way, update tasks are reduced and differences between the machines are avoided.
-Administration is further simplified by using the [Spack]() package manager as this application allows for version-agnostis library installations on the user level without the need of requesting and waiting for custom installation to the admin.
+Administration is further simplified by using the [Spack]() package manager as this application allows for version-agnostic library installations on the user level without the need of requesting and waiting for custom installation to the admin.
 
 The $HOME directory of every used is shared across all nodes, avoiding the need to keep data and scripts in sync across multiple machines.
 
@@ -34,7 +34,7 @@ Your password will consist of 20 characters and you will not remember it.
 See [this](https://help.github.com/articles/connecting-to-github-with-ssh/) guide if you have never worked with SSH keys before.
 If you have, you can also use `ssh-copy-id <username>@141.35.158.107` to copy your key to the server.
 Afterwards you should be able to login via `ssh <username>@141.35.158.107` without being prompted for your password.
-A working SSH setup is also requiered if you want to use the [SSH way](#ssh-mode) to schedule jobs.
+A working SSH setup is also required if you want to use the [SSH way](#ssh-mode) to schedule jobs.
 
 ## Web Address
 
@@ -63,7 +63,7 @@ The HPC was built following the installation guide provided by the [Open HPC](ht
 It is currently running on a CentOS 7.6 operating system using the CentOS main-line Kernel (currently at version 5.0).  
 The scheduler that is used for queuing processing job requests is [SLURM](https://slurm.schedmd.com/).
 Load monitoring is performed via [Ganglia](http://ganglia.sourceforge.net/). 
-A live view is accessable [here](http://edi.geogr.uni-jena.de/ganglia/?r=hour&cs=&ce=&m=load_one&s=by+name&c=&tab=m&vn=&hide-hf=false).  
+A live view is accessible [here](http://edi.geogr.uni-jena.de/ganglia/?r=hour&cs=&ce=&m=load_one&s=by+name&c=&tab=m&vn=&hide-hf=false).  
 [Spack](https://spack.io/) is used as the package manager.
 More detailed instructions on the scheduler and the package manager can be found in their respective chapters.
 
