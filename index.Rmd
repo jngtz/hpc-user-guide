@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
-# bibliography: [book.bib, packages.bib]
+bibliography: [book.bib]
 biblio-style: apalike
 link-citations: yes
 # github-repo: rstudio/bookdown-demo
@@ -29,12 +29,18 @@ Administration is further simplified by using the [Spack]() package manager as t
 
 The $HOME directory of every used is shared across all nodes, avoiding the need to keep data and scripts in sync across multiple machines.
 
-**Before you start**, please add a SSH key to your account to be able to login without password.
-Your password will consist of 20 characters and you will not remember it.
+**Before you start**:
+
+1. Working on a Linux server naturally requires a certain amount of familiarity with UNIX command-line shells and text editors.
+There are dozens of Linux online tutorials which should help to get you started.^[For example, https://ryanstutorials.net/linuxtutorial/.]
+Of course, there are also great books on how to use Linux such as @shotts_linux_2012, @sobell_practical_2010 and @ward_how_2015 all of which are freely available.
+If you still got stuck, Google might help you.
+1. Please add a SSH key to your account to be able to log on to the server without having to type your password.
+This is especially useful since your password will consist of 20 characters which you most likely will not remember.
 See [this](https://help.github.com/articles/connecting-to-github-with-ssh/) guide if you have never worked with SSH keys before.
-If you have, you can also use `ssh-copy-id <username>@141.35.158.107` to copy your key to the server.
+If you are in possession of an SSH key, you can use `ssh-copy-id <username>@141.35.158.107` to copy your key to the server.
 Afterwards you should be able to login via `ssh <username>@141.35.158.107` without being prompted for your password.
-A working SSH setup is also required if you want to use the [SSH way](#ssh-mode) to schedule jobs.
+Note also that an SSH key is mandatory if you want to use the [SSH way](#ssh-mode) to schedule jobs.
 
 ## Web Address
 
