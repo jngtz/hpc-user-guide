@@ -11,26 +11,26 @@
 
 ## FAQ
 
-Q: I ran `sinfo` and saw that the state of the nodes is "down".  
-A: Please contact the admin (patrick.schratz@uni-jena.de) to resume the nodes.
+**Question**: I ran `sinfo` and saw that the state of the nodes is "down".  
+**Answer**: Please contact the admin (patrick.schratz@uni-jena.de) to resume the nodes.
 
-Q: I ran `sinfo` and see that some nodes have status "mix" and some "alloc". What are the differences?  
-A: "mix" means that the node is not fully loaded and is in a mixed state between processing and being idle. "alloc" means that the node is fully allocated.
+**Question**: I ran `sinfo` and see that some nodes have status "mix" and some "alloc". What are the differences?  
+**Answer**: "mix" means that the node is not fully loaded and is in a mixed state between processing and being idle. "alloc" means that the node is fully allocated.
 
-Q: I ran `spack load <library>` and got `==> Error: the constraint '['gdal@2.3.3']' matches multiple packages:`. What shall I do?  
-A: This means that multiple instances of this library are installed. Sometimes this is unavoidable, for example some libraries request GDAL being built against Python2, others against Python3. In this case, do the following:
+**Question**: I ran `spack load <library>` and got `==> Error: the constraint '['gdal@2.3.3']' matches multiple packages:`. What shall I do?  
+**Answer**: This means that multiple instances of this library are installed. Sometimes this is unavoidable, for example some libraries request GDAL being built against Python2, others against Python3. In this case, do the following:
 
 1. Run `spack find --long <library>`
-2. Use the number/letter combination appearing to load the package, e.g. `spack load /zms1347`.
+2. Use the has identifier to load the package, e.g. `spack load /jsajw88`.
 3. If you use this library regulary, put this command into your `.bashrc` file.
 4. If you experience problems during usage, try the other one.
 5. If you wanna see the differences between both, do `spack find --variants <library>`
 
-Q: I ran `spack load <library` and got the error message "Even though <library> is installed, no tcl module has been generated for it".  
-A: This means that the module 
+**Question**: I ran `spack load <library` and got the error message "Even though <library> is installed, no tcl module has been generated for it".  
+**Answer**: This means that the module 
 
-Q: When trying to connect to RStudio Server, I get "Unable to connect to service" when opening a session.  
-A: There can be multiple reasons for that. Here is a checklist:
+**Question**: When trying to connect to RStudio Server, I get "Unable to connect to service" when opening a session.  
+**Answer**: There can be multiple reasons for that. Here is a checklist:
 
 - Do you have `spack load gcc@7.3.0` in your `~/.bash.rc` file?
 - Are you using `https://` to connect? `http://` won't work.
