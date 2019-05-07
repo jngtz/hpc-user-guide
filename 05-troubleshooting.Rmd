@@ -8,7 +8,6 @@
 
 ## Cautionary Notes
 
-
 ## FAQ
 
 **Question**: I ran `sinfo` and saw that the state of the nodes is "down".  
