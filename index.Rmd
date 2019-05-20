@@ -105,3 +105,33 @@ This applies especially if you are not in the office but accessing the server fr
 ### Windows
 
 Please install [sshfs-win](https://github.com/billziss-gh/sshfs-win) and follow the instructions.
+
+## Sharing of Results
+
+The _Jupiter_ server (141.35.159.87) is set up as a web-server.
+This means it is able to render HTML contents and list files in a directory listing.
+
+_Jupiter_ is mounted to the cluster at `/mnt/nfs/jupiter`.
+To use the functionality, you simply need to copy your desired files to `/home/www/<folder>` on Jupiter.
+To do so, please follow these steps:
+
+1. Request an account on Jupiter from Andreas (andreas.schaef@uni-jena.de).
+1. Login to _Jupiter_ and create the desired folders.
+    The public URL relates as follows to the local directory:
+
+    `https://jupiter.geogr.uni-jena.de/<folder>` -> `/home/www/<folder>` 
+1. Copy your files from the cluster to the desired location on _Jupiter_ using the following code
+
+    ```{bash eval=FALSE}
+    rsync -rlptDvzog --chown=www-data:www-data --fake-super \
+      /mnt/nfs/jupiter/<path-to-your-file> \
+      -e ssh <username>@jupiter.geogr.uni-jena.de:/home/www/<path-to-directory>
+    ```
+
+    This code will only copy files that have changed when being compared to the last execution so you can safely automate the call into your workflow.
+    
+Since all these contents will be available to everyone, you want to add a README file to your directory listing and also add an Impressum.
+Even though no one usually knows this URL by default, be careful about sharing sensible files.
+
+See https://jupiter.geogr.uni-jena.de/life-healthy-forest/ for an example.
+You can request this theme from Andreas.
