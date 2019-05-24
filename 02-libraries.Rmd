@@ -150,10 +150,11 @@ More information can be found [here](https://github.com/Project-OSRM/osrm-backen
 
 `pandoc` is not yet supported by Spack.
 Luckily, `rstudio-server` ships with its own `pandoc` binary.
-To make it available on the HPC (e.g. for `rmarkdown` rendering of reports), add it to your `$PATH` variable in `~/.bashrc` like this:
+To make it usable (e.g. for `rmarkdown` rendering of reports), `pandoc` is shared from the main node at `/opt/pandoc/pandoc`.
+To use it, add it to your `$PATH` variable in `~/.bashrc` like this:
 
 ```sh
-export PATH=/usr/lib/rstudio-server/bin/pandoc:$PATH
+export PATH=/opt/pandoc/pandoc:$PATH
 ```
 
 ## Getting Started
