@@ -114,7 +114,13 @@ Please install [sshfs-win](https://github.com/billziss-gh/sshfs-win) and follow 
 
 ## Sharing of Results
 
-The _Jupiter_ server (141.35.159.87) is set up as a web-server.
+### `workflowr`
+
+Take a look at the R package [workflowr](https://jdblischak.github.io/workflowr/articles/wflow-01-getting-started.html) which allows automatic deployment of R Notebooks.
+
+### Local web server
+
+_Jupiter_ server (141.35.159.87) is set up as a web-server.
 This means it is able to render HTML contents and list files in a directory listing.
 
 _Jupiter_ is mounted to the cluster at `/mnt/nfs/jupiter`.
