@@ -55,7 +55,7 @@ The newest group of compute nodes has the following specifications:
 
 - CPU: AMD Threadripper 2950X, 16-core, 3.5 GHz - 4.4 GHz
 - RAM: 126 GB DDR4 
-- 1 TB M2 SSD
+- 20 TB disk storage (via _mars_ server)
 - Number of nodes: 3
 
 The master node also belongs to this group.
@@ -75,14 +75,20 @@ More detailed instructions on the scheduler and the package manager can be found
 
 ## Data storage
 
-Currently all data is written to the 1 TB SSD of the master node.
-As soon as the new 54 TB data server is up and running it will be used for the `/home` partition.
+The _mars_ data server is mounted at `/home` and stores all the data.
+Currently we have a capacity of 20 TB for all users combined.
+You can store all your data under your `/home` directory.
 
 ## Accessing files from your local computer
 
 It is recommended to mount the server via `sshfs` to your local machine.
 Transfer speed ranges between 50 - 100 Mbit/s when you're in the office so you should be able to access files without a delay.
 Accessing files from outside will be slower.
+
+If you really run in trouble with transfer speed, you could directly connect to the _mars_ server.
+Currently, the route is as follows: `<local> (sshfs) -> edi (nfs) -> mars`
+We aim to canalize all logins and transfers to one single machine (edi).
+That's why we favorite to not force people to connect to another machine just to upload the data.
 
 ### Unix
 
