@@ -49,19 +49,25 @@ Note also that an SSH key is mandatory if you want to use the [SSH way](#ssh-mod
 
 ## Hardware
 
-The cluster consists of multiple compute node groups.
+The cluster consists of multiple different computing machines.
 
-The newest group of compute nodes has the following specifications:
+Group "**threadripper**":
 
-- CPU: AMD Threadripper 2950X, 16-core, 3.5 GHz - 4.4 GHz
+- CPU: AMD Threadripper 2950X, 16-core, Hyperthreading, 3.5 GHz - 4.4 GHz
 - RAM: 126 GB DDR4 
-- 20 TB disk storage (via _mars_ server)
-- Number of nodes: 3
+- Number of nodes: 3 c[0-2] (+ frontend)
 
-The master node also belongs to this group.
-Due to management overhead, only 8 cores (16 CPUs) can be used.
+Due to management overhead, only 8 cores (16 CPUs) are allowed to be used on the frontent.
 
-Soon there will be a second group of computes nodes added (the old machines that we used up until now).
+Group "**opteron**":
+
+- CPU: AMD Opteron 6172, 48 cores, no Hyperpthreading, 2.1 GHz
+- RAM: 193 GB DDR3
+- Number of nodes: 3 (c[3-6])
+
+The groups are reflected in the scheduler via the "partition" setting.
+
+Group "threadripper" is about 3.5x faster than group "opteron".
 
 ## Software
 
