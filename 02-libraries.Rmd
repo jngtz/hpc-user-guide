@@ -182,6 +182,19 @@ export LD_PRELOAD=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-7.3.0/gdal-2.3.3
 
 If you use another GDAL version you need to adapt the code above.
 
+#### rJava
+
+Using the R package `rJava` is a bit tricky.
+Linking against the JDK installed via Spack causes troubles and is not trivial across the nodes.
+To still get `rJava` running, it was installed as a Spack package.
+To make it available in your R package path, you need to add the following line to your `.Rprofile`:
+
+```{r eval = FALSE}
+.libPaths(append(.libPaths(), "/opt/spack/opt/spack/linux-centos7-x86_64/gcc-7.3.0/r-rjava-0.9-11-e5vzheivjx7l2lykrzaure57ktdp5xgb/rlib/R/library"))
+```
+
+As you can see this loads version 0.9.11 - it might be necessary to adjust the version and the hash part after it in the future.
+
 ## Getting Started
 
 If you worked through all these steps, you're almost good to go.
