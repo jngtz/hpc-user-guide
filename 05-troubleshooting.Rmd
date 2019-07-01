@@ -1,11 +1,5 @@
 # Troubleshooting and Cautionary Notes
 
-## Known Issues
-
-- The "data storage" is not mounted yet.
-
-- Sometimes the graphic device is not accessible in an R session. This currently happens without a clear pattern and it is not clear yet which system library (or maybe a sequence of loading R packages) is causing it.
-
 ## Cautionary Notes
 
 ## FAQ
