@@ -34,3 +34,6 @@
 - Do you have `spack load gcc@7.3.0` in your `~/.bash.rc` file?
 - Are you using `https://` to connect? `http://` won't work.
 - Connect to `edi.geogr.uni-jena.de:8787/home` and kill the problematic session. Then try again.
+
+**Question**: When loading GDAL on the nodes I get linking problems or see an "undefined reference" error.
+**Answer**: Most likely a leftover of a GDAL source installation is causing trouble. See the instruction in the [GDAL](#gdal) section on what to put in your clustermq template.

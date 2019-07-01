@@ -165,6 +165,22 @@ To use it, add it to your `$PATH` variable in `~/.bashrc` like this:
 ```sh
 export PATH=/opt/pandoc/pandoc:$PATH
 ```
+### GDAL {#gdal}
+
+GDAL is installed and loaded via Spack.
+Since GDAL is often required as a make dependency for other libraries, you will see multiple GDALs installed via Spack if you query `spack find --long gdal`.
+However, only one is explicitly installed and has an environment module built.
+Check `module avail` and look for GDAL to see which one.
+
+Unfortunately there are leftovers from a previous source installation of GDAL that cause linking troubles.
+To prevent these issues from occurring, you need to set the env variable `LD_PRELOAD` explicitly in your `~/.bashrc` and clustermq template.
+For `gdal@2.3.3-5664dlp` this looks as follows:
+
+```sh
+export LD_PRELOAD=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-7.3.0/gdal-2.3.3-5664dlptnq3x6d55wcu6qzgnxohrijda/lib/libgdal.so.20
+```
+
+If you use another GDAL version you need to adapt the code above.
 
 ## Getting Started
 
