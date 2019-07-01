@@ -54,11 +54,11 @@ For example, one of my templates looks like this:
 
 cd path/to/project
 
-spack load r@<version>
+# If you want to have pandoc and GDAL support on the workers, you need to initialize both the same way as on the frontend node. See the respective sections in the user guide.
 
 # add more spack libraries here
 
-CMQ_AUTH={{ auth }} R --no-save --no-restore -e 'clustermq:::worker("{{ master }}")'
+CMQ_AUTH={{ auth }} /opt/R/<version>/bin/R --no-save --no-restore -e 'clustermq:::worker("{{ master }}")'
 ```
 
 Note: The `#` signs are no mistakes here, they are no "comment" signs in this context. 

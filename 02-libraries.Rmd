@@ -103,7 +103,16 @@ Fortunately, there is a small trick to save some time - check out section [creat
 ## R
 
 All versions from v3.4.4 upwards are installed.
-Query them with `spack find r` and load a specific one with `spack load r@3.5.1`.
+R is not managed via Spack as it caused some problems with the RStudio Server.
+R versions are installed at `/opt/R/<version>`.
+
+To load a specific R version, call the following from the terminal
+
+```sh
+export R_HOME=/opt/R/<version>/lib64/R
+```
+
+and then execute `R` (or preferably [radian](#radian)).
 
 ## RStudio Server
 
@@ -172,7 +181,7 @@ Basically, all you need to do is (after logging in) to run `byobu` and it will s
 You can open multiple ones with `byobu -S <session name>`. 
 Once you have multiple ones open, an interactive prompt will ask you which one you want to start next time.
 
-#### radian
+#### radian {#radian}
 
 `radian` is an optimized wrapper for the R command line. 
 You will notice the benefits compared to the default `R` once you start using it.
@@ -217,12 +226,11 @@ This saves a lot of time, especially for packages that take long to install (`dp
 #### Create a wrapper for your project {#wrapper}
 
 Usually you might want to use a `packrat` library in a specific directory with a specific R version.
-Rather than navigating there all the time by hand and loading the R version via spack, you can create an alias that does this for you.
-You can of course also use this approach without packrat, just to load a specific version. 
-This saves you typing `spack load r<version>`.
+Rather than navigating there all the time by hand and loading the R version manually, you can create an alias that does this for you.
+You can of course also use this approach without packrat - just to load a specific version. 
 
 ```
-alias my-project="cd /path/to/project && spack load r@<version> && radian"
+alias my-project="cd /path/to/project && export R_HOME=/opt/R/<version>/lib64/R && radian"
 ```
 
 Put this in your `.bashrc` and save time :)
