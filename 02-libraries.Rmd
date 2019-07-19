@@ -182,7 +182,7 @@ export LD_PRELOAD=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-7.3.0/gdal-2.3.3
 
 If you use another GDAL version you need to adapt the code above.
 
-#### rJava
+### rJava
 
 Using the R package `rJava` is a bit tricky.
 Linking against the JDK installed via Spack causes troubles and is not trivial across the nodes.
@@ -194,6 +194,13 @@ To make it available in your R package path, you need to add the following line 
 ```
 
 As you can see this loads version 0.9.11 - it might be necessary to adjust the version and the hash part after it in the future.
+
+### GRASS GIS
+
+The Spack build of GRASS GIS is unfortunately not working since months.
+See this [issue](https://github.com/spack/spack/issues/11325) for more information.
+Hence, GRASS was installed from source as a workaround under `/opt/grass-7.6.1`.
+To use it, you need to set your GRASS environment accordingly using a subpath of `/opt/grass-7.6.1`.
 
 ## Getting Started
 
