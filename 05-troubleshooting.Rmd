@@ -32,5 +32,8 @@
 **Question**: When loading GDAL on the nodes I get linking problems or see an "undefined reference" error.
 **Answer**: Most likely a leftover of a GDAL source installation is causing trouble. See the instruction in the [GDAL](#gdal) section on what to put in your clustermq template.
 
+**Question**: I cannot install `udunits2`. What shall I do?  
+**Answer**: Install it via `install.packages('udunits2', type = 'source', repo = 'cran.rstudio.com', configure.args='--with-udunits2-include=/usr/include/udunits2'`.
+
 **Question**: I am getting installation errors on R >3.6.0 containing either `Error in slibs[are_shared] : invalid subscript type 'list` or `version 'ZLIB_1.2.9' not found`.  
 **Answer**: Try turning off staged installs via `Sys.setenv("R_INSTALL_STAGED"=FALSE)` or by setting the env var globally in your .bashrc file. See https://github.com/r-lib/later/issues/93 for more information.
