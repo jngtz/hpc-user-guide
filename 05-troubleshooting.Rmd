@@ -44,5 +44,12 @@ install.packages("rgdal", configure.args = c("--with-proj-include=/opt/spack/opt
     t/spack/linux-centos7-x86_64/gcc-7.3.0/proj-5.0.1-kbodwcnjxemfewjbke6lbzp44z52umpa/lib"))
 ```
 
+You can optionally set this in you `.Rprofile` to not have to type it on every install:
+
+```r
+options(configure.args=list(rgdal=c("--with-proj-include=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-7.3.0/proj-5.0.1-kbodwcnjxemfewjbke6lbzp44z52umpa/include",
+"--with-proj-lib=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-7.3.0/proj-5.0.1-kbodwcnjxemfewjbke6lbzp44z52umpa/lib")))
+```
+
 **Question**: I am getting installation errors on R >3.6.0 containing either `Error in slibs[are_shared] : invalid subscript type 'list` or `version 'ZLIB_1.2.9' not found`.  
 **Answer**: Try turning off staged installs via `Sys.setenv("R_INSTALL_STAGED"=FALSE)` or by setting the env var globally in your .bashrc file. See https://github.com/r-lib/later/issues/93 for more information.
