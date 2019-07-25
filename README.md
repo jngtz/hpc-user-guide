@@ -2,3 +2,5 @@ The repository holds the sources for the [HPC user guide](https://jupiter.geogr.
 
 It is written as [bookdown](https://github.com/rstudio/bookdown) e-book.
 Publish directory is `_book`.
+
+test
