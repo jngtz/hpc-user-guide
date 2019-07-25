@@ -35,5 +35,14 @@
 **Question**: I cannot install `udunits2`. What shall I do?  
 **Answer**: Install it via `install.packages('udunits2', type = 'source', repo = 'cran.rstudio.com', configure.args='--with-udunits2-include=/usr/include/udunits2'`.
 
+**Question**: I cannot install `rgdal`. What shall I do?  
+**Answer**: Set the dynamic linker explicit to the respective libraries. For example for PROJ: 
+
+```r
+install.packages("rgdal", configure.args = c("--with-proj-include=/opt/spack/opt/spack/linux-centos7-
+    x86_64/gcc-7.3.0/proj-5.0.1-kbodwcnjxemfewjbke6lbzp44z52umpa/include", "--with-proj-lib=/opt/spack/op
+    t/spack/linux-centos7-x86_64/gcc-7.3.0/proj-5.0.1-kbodwcnjxemfewjbke6lbzp44z52umpa/lib"))
+```
+
 **Question**: I am getting installation errors on R >3.6.0 containing either `Error in slibs[are_shared] : invalid subscript type 'list` or `version 'ZLIB_1.2.9' not found`.  
 **Answer**: Try turning off staged installs via `Sys.setenv("R_INSTALL_STAGED"=FALSE)` or by setting the env var globally in your .bashrc file. See https://github.com/r-lib/later/issues/93 for more information.
