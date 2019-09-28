@@ -19,7 +19,7 @@ Welcome to the user manual of the High-Performance-Server (HPC) of the GIScience
 It is tailored towards R processing.
 This document describes how to get started and submit jobs to the cluster.
 
-#### A short introduction to HPCs
+**A short introduction to HPCs**
 
 The big advantage of a HPC is that users can submit jobs to ONE machine which then distributes the work across multiple machines in the background.
 Incoming processing requests (jobs) are handled by the scheduler (SLURM), taking away the work of queuing the job and the potential issue of clashing into jobs from other users.
