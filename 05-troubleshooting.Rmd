@@ -5,51 +5,38 @@
 ## FAQ
 
 **Question**: I ran `sinfo` and saw that the state of the nodes is "down".  
-**Answer**: Please contact the admin (patrick.schratz@uni-jena.de) to resume the nodes.
+**Answer**: Please contact the admin to resume the nodes.
 
-**Question**: I ran `sinfo` and see that some nodes have status "mix" and some "alloc". What are the differences?  
+---
+
+**Question**: I ran `sinfo` and saw that some nodes have status "mix" and some "alloc". What are the differences?  
 **Answer**: "mix" means that the node is not fully loaded and is in a mixed state between processing and being idle. "alloc" means that the node is fully allocated.
 
-**Question**: I ran `spack load <library>` and got `==> Error: the constraint '['gdal@2.3.3']' matches multiple packages:`. What shall I do?  
-**Answer**: This means that multiple instances of this library are installed. Sometimes this is unavoidable, for example some libraries request GDAL being built against Python2, others against Python3. In this case, do the following:
-
-1. Run `spack find --long <library>`
-2. Use the has identifier to load the package, e.g. `spack load /jsajw88`.
-3. If you use this library regulary, put this command into your `.bashrc` file.
-4. If you experience problems during usage, try the other one.
-5. If you wanna see the differences between both, do `spack find --variants <library>`
-
-**Question**: I ran `spack load <library` and got the error message "Even though <library> is installed, no tcl module has been generated for it".  
-**Answer**: This means that the module 
-
-**Question**: When trying to connect to RStudio Server, I get "Unable to connect to service" when opening a session.  
-**Answer**: There can be multiple reasons for that. Here is a checklist:
-
-- Do you have `spack load gcc@7.3.0` in your `~/.bash.rc` file?
-- Are you using `https://` to connect? `http://` won't work.
-- Connect to `edi.geogr.uni-jena.de:8787/home` and kill the problematic session. Then try again.
-
-**Question**: When loading GDAL on the nodes I get linking problems or see an "undefined reference" error.
-**Answer**: Most likely a leftover of a GDAL source installation is causing trouble. See the instruction in the [GDAL](#gdal) section on what to put in your clustermq template.
+---
 
 **Question**: I cannot install `udunits2`. What shall I do?  
-**Answer**: Install it via `install.packages('udunits2', type = 'source', repo = 'cran.rstudio.com', configure.args='--with-udunits2-include=/usr/include/udunits2'`.
+**Answer**: Install it via `install.packages('udunits2', type = 'source',  configure.args='--with-udunits2-lib=<path-to-installation>'`.
+For example `"--with-udunits2-include=/opt/spack/opt/spack/linux-centos7-zen/gcc-9.2.0/udunits2-2.2.24-lbs7534pnuqex4ce3s3houcgcpabyrhq/include/"`.
 
-**Question**: I cannot install `rgdal`. What shall I do?  
-**Answer**: Set the dynamic linker explicit to the respective libraries. For example for PROJ: 
+You can set this option permanently in `~/.Rprofile` in `options(configure.args = list(udunits = c(<>)))`.
+
+---
+
+**Question**: I cannot install `rgdal` | `sf`. What shall I do?  
+**Answer**: All the spatial packages are a bit troublesome since they expect certain libraries in predefined directories. If this is not the case, the locations need to be given explicitly during installation. You need to install it with custom options set for `configure.args`, similar to `udunits` above.
+
+The following works:
 
 ```r
-install.packages("rgdal", configure.args = c("--with-proj-include=/opt/spack/opt/spack/linux-centos7-
-    x86_64/gcc-7.3.0/proj-5.0.1-kbodwcnjxemfewjbke6lbzp44z52umpa/include", "--with-proj-lib=/opt/spack/op
-    t/spack/linux-centos7-x86_64/gcc-7.3.0/proj-5.0.1-kbodwcnjxemfewjbke6lbzp44z52umpa/lib"))
+options(
+  configure.args=list(
+    rgdal = c(
+      "--with-proj-lib=/opt/spack/opt/spack/linux-centos7-zen/gcc-9.2.0/proj-5.2.0-az6mkj55zpnh6fmg2ae5wyrmhfiynxfx/lib"),
+    sf = c(
+      "--with-proj-lib=/opt/spack/opt/spack/linux-centos7-zen/gcc-9.2.0/proj-5.2.0-az6mkj55zpnh6fmg2ae5wyrmhfiynxfx/lib")
+  )
+)
 ```
 
-You can optionally set this in you `.Rprofile` to not have to type it on every install:
+---
 
-```r
-options(configure.args=list(rgdal=c("--with-proj-include=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-7.3.0/proj-5.0.1-kbodwcnjxemfewjbke6lbzp44z52umpa/include",
-"--with-proj-lib=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-7.3.0/proj-5.0.1-kbodwcnjxemfewjbke6lbzp44z52umpa/lib")))
-```
-
-**Question**: I am getting installation errors on R >3.6.0 containing either `Error in slibs[are_shared] : invalid subscript type 'list` or `version 'ZLIB_1.2.9' not found`.  
-**Answer**: Try turning off staged installs via `Sys.setenv("R_INSTALL_STAGED"=FALSE)` or by setting the env var globally in your .bashrc file. See https://github.com/r-lib/later/issues/93 for more information.
