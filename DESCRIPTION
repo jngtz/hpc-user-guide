@@ -1,8 +1,7 @@
-Package: placeholder
+Package: hpc
 Type: Book
 Title: Does not matter.
 Version: 0.0.1
 Imports: bookdown
 Remotes: rstudio/bookdown
-URL: https://github.com/pat-s/placeholder
-BugReports: https://github.com/pat-s/placeholder/issues
+URL: https://github.com/giscience-fsu/hpc-user-guide
