@@ -1,34 +1,33 @@
-# Submitting jobs
+# Submitting jobs {#submit-jobs}
 
 ## `clustermq` setup
 
 Every job submission is done via `clustermq::Q()` (either directly or via `drake`). 
 See the setup instructions in the [clustermq](https://mschubert.github.io/clustermq/) package on how to setup the package.
 
-First, you need to set some options in your `.Rprofile` (on the master node):
+First, you need to set some options in your `.Rprofile` (on the master node or in your project root when you use _packrat_):
 
-```
+```r
 options(
     clustermq.scheduler = "slurm",
-    clustermq.template = "</path/to/file/below>"
+    clustermq.template = "</path/to/file/"
 )
 ```
 
-`clustermq.template` should point to a `clustermq.template` file. 
-Take a look at the specific instructions in the respective [package vignette](https://mschubert.github.io/clustermq/articles/userguide.html#slurm).
+See the [package vignette](https://mschubert.github.io/clustermq/articles/userguide.html#slurm) on how to set up the file.
 
 Note that you can have multiple `.Rprofile` files on your system:
 
 1. Your default R interpreter will use the `.Rprofile` found in the home directory (`~/`).
-1. But you can also save an `.Rprofile` file in the root directory of a (RStudio) project. 
+1. But you can also save an `.Rprofile` file in the root directory of a (RStudio) project (which will be preferred over the one in $HOME). 
 
-This way you can use customized `.Rprofile` files specifically written for a certain project.
+This way you can use customized `.Rprofile` files tailored to a project.
 
-Now you should be able to run the [example](https://github.com/mschubert/clustermq) at the top of the `README` of the _clustermq_ package.
+At this stage you should be able to run the [example](https://github.com/mschubert/clustermq) at the top of the `README` of the _clustermq_ package.
 It is a very simple example which finishes in a few seconds.
 If it does not work, you either did something wrong or the nodes are busy.
 Check with `sinfo` and `squeue`.
-Otherwise see the [Troubleshooting](#troubleshooting) chapter.
+Otherwise see the [troubleshooting](#troubleshooting) chapter.
 
 ```{block, type='rmdcaution'}
 Be aware of setting `n_cpus` in the `template` argument of `clustermq::Q()` if your submitted job is parallelized!
@@ -45,7 +44,7 @@ For example, one of my templates looks like this:
 ```sh
 #!/bin/sh
 #SBATCH --job-name={{ job_name }}
-#SBATCH --partition=normal
+#SBATCH --partition=threadripper
 #SBATCH --output={{ log_file | /dev/null }} # you can add .%a for array index
 #SBATCH --error={{ log_file | /dev/null }}
 #SBATCH --cpus-per-task={{ n_cpus }}
@@ -53,10 +52,6 @@ For example, one of my templates looks like this:
 #SBATCH --array=1-{{ n_jobs }}
 
 cd path/to/project
-
-# If you want to have pandoc and GDAL support on the workers, you need to initialize both the same way as on the frontend node. See the respective sections in the user guide.
-
-# add more spack libraries here
 
 CMQ_AUTH={{ auth }} /opt/R/<version>/bin/R --no-save --no-restore -e 'clustermq:::worker("{{ master }}")'
 ```
@@ -83,7 +78,8 @@ drake::make(parallelism = "clustermq", n_jobs = 1,
 clustermq::Q(template = list(n_cpus = <X>, log_file = <Y>, memory = <Z>))
 ```
 
-(The individual components of these calls are explained in more detail below.
+(The individual components of these calls are explained in more detail below.)
+
 Note that `drake` uses `clustermq` under the hood. 
 Notations like `<X>` are meant to be read as placeholders, meaning you need to replace them with valid content.)
 
@@ -96,7 +92,7 @@ There are two ways to specify these settings, depending on which approach you us
 
 1. via `clustermq::Q()` directly
 
-Pass the values via argument `template` like `template = list(n_cpus = X, memory = Y)`.
+Pass the values via argument `template` like `template = list(n_cpus = <X>, memory = <Y>)`.
 It will then be passed to the `clustermq.template` file (frequently named `slurm_clustermq.tmpl`) which contains following lines:
 
 ```sh
@@ -105,7 +101,6 @@ It will then be passed to the `clustermq.template` file (frequently named `slurm
 ```
 
 This tells the scheduler how many resources (here cpus) your job needs.
-Note that the maximum values are `n_cpus = 32` and `memory = 126000` per node.
 
 2. via `drake::make()` (recommended)
 
@@ -118,7 +113,7 @@ The following two examples show you the implications of wrong specifications.
 ```
 
 ```{block, type='rmdcaution'}
-`mclapply(cores = 20)` > `n_cpus = 16`
+`mclapply(cores = 20)` (in your script) > `n_cpus = 16`
 
 In this case, four workers will always be in "waiting mode" since only 16 cpus can be used by your resource request. 
 This slows down your parallelization but does no harm to other users. 
@@ -141,15 +136,15 @@ When submitting jobs you can track its progress by specifying a `log_file` in th
 For `drake`, the equivalent is to specify `console_log_file()` in either `make()` or `drake_config()`.
 
 If your jobs are running on a node, you can SSH into the node, e.g. `ssh c0`.
-In the node you can take a look at the current load by using `htop`.
-Note that you can only login if you have a running progress in a specific node.
+There you can take a look at the current load by using `htop`.
+Note that you can only log in if you have a running progress on a specific node.
 
 Another option is to take a look [Ganglia](http://141.35.158.107/ganglia/?r=hour&cs=&ce=&m=load_one&s=by+name&c=OpenHPC&tab=m&vn=&hide-hf=false) to see the load of the HPC.
 
 ## Summary
 
 1. Set up your `.Rprofile` with `options(clustermq.template = "/path/to/file")`.
-  The `clustermq.template` should point to a SLURM template file in your home or project directory.
+  The `clustermq.template` should point to a SLURM template file in your $HOME or project directory.
 
 1. Decide which approach you want to use:
 
@@ -160,7 +155,6 @@ Another option is to take a look [Ganglia](http://141.35.158.107/ganglia/?r=hour
 
 ## Best practice {#best-practice}
 
-If you submit a job, you submit it to ONE node.
 You can submit as many tasks as you want in separate R sessions, they will be processed as ranked in the queue of the scheduler.
 However, submitting single jobs that finish quickly is tedious.
 The same applies to the submission of multiple jobs in separate R sessions.
@@ -168,7 +162,7 @@ The same applies to the submission of multiple jobs in separate R sessions.
 These two points are the reason why it is *highly* recommended to use `drake`.
 By using `drake`, all of your intermediate R objects are "targets". 
 You can specify any number of targets that should be build when calling `drake::make()`.
-`drake` will take care that for each target as separate job is created which is then added to the Slurm queue.
+`drake` will take care that for each target as separate job is created which is then added to the SLURM queue.
 
 For example, if you want to build three R objects named `object1`, `object2` and `object3` in parallel, one on each node:
 
@@ -178,7 +172,7 @@ drake::make(plan, targets = c("object1", "object2", "object3"), jobs = 3,
             log_file = "/path/to/log.txt"))
 ```
 
-- Creates three jobs which are added to the Slurm queue
+- Creates three jobs which are added to the SLURM queue
 - Each jobs requires 16 cores
 - Each job needs 32 GB of memory
 - The call is finished once all jobs have finished.
