@@ -1,6 +1,3 @@
-The repository holds the sources for the [HPC user guide](https://jupiter.geogr.uni-jena.de/hpc).
+# HPC User Guide 
 
-It is written as [bookdown](https://github.com/rstudio/bookdown) e-book.
-Publish directory is `_book`.
-
-test
+The repository holds the sources for the [HPC user guide](https://jupiter.geogr.uni-jena.de/hpc) of the GIScience group at University Jena.
