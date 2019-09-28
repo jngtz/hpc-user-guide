@@ -65,9 +65,9 @@ Simply add them to `~/.bashrc`.
 When running R for spatial analysis, the following are required:
 
 ```sh
-module load gdal-3.0.1-gcc-9.2.0-2rbxot
+module load gdal-3.0.1-gcc-9.2.0-2rbxot4
 module load geos-3.7.2-gcc-9.2.0-hn6gflr
-module load proj-5.2.0-gcc-9.2.0-az6mkj
+module load proj-5.2.0-gcc-9.2.0-az6mkj5
 module load udunits2-2.2.24-gcc-9.2.0-lbs7534
 module load pandoc-2.7.3-gcc-9.2.0-tlzhs7d
 ```
