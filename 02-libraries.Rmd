@@ -1,9 +1,9 @@
-# Libraries and Modules {#libraries}
+# Libraries and Environment Modules {#libraries}
 
-## Adding Spack to your shell
+## Introduction
 
 Most system relevant libraries are installed via [Spack](spack.io).
-They are available as environment modules.
+However, as a user you do not need to worry about this since you are loading everything via "environment modules".
 Available modules can be queried using `modules avail`.
 
 Please use only module list with the suffix "linux-centos7-zen".
@@ -27,7 +27,7 @@ Here is a snapshot:
    charliecloud/0.9.7    gnu8/8.3.0            papi/5.7.0     singularity/3.2.1
 ```
 
-## Loading libraries
+## Loading modules
 
 Libraries can be loaded via `module load <module>`.
 
@@ -51,7 +51,13 @@ You can check that it worked via
 gdalinfo --version
 ```
 
-## Default libraries
+## Checking loaded modules
+
+```sh
+module list
+```
+
+## Default modules
 
 It is useful to have some libraries loaded by default when logging in to the server.
 Simply add them to `~/.bashrc`.
