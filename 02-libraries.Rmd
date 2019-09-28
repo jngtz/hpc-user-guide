@@ -147,16 +147,6 @@ More information can be found [here](https://github.com/Project-OSRM/osrm-backen
 GDAL is installed and loaded via Spack.
 Check `module avail` and look for GDAL to see which versions are available.
 
-### GRASS GIS
-
-The installation path of GRASS GIS is here: `/opt/spack/opt/spack/linux-centos7-x86_64/gcc-7.3.0/grass-7.6.1-koiklsmbsephjov2yhjer3osmuf7hjuo/grass76`.
-
-Using package `link2GI` the init call would look like
-
-```r
-link2GI::linkGRASS7(x = RQGIS::dem, search_path = "/opt/spack", quiet = FALSE)
-```
-
 ## Getting Started
 
 If you worked through all these steps, you are almost good to go.
