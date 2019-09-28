@@ -29,7 +29,7 @@ Here is a snapshot:
 
 ## Loading modules
 
-Libraries can be loaded via `module load <module>`.
+Modules can be loaded via `module load <module>`.
 
 First, you need to load a C compiler as most programs depend on it.
 This module is the only one that you should which uses `gcc-4.8.5`.
@@ -59,7 +59,7 @@ module list
 
 ## Default modules
 
-It is useful to have some libraries loaded by default when logging in to the server.
+It is useful to have some modules loaded by default when logging in to the server.
 Simply add them to `~/.bashrc`.
 
 When running R for spatial analysis, the following are required:
@@ -93,7 +93,7 @@ If you need to load specifc modules for a project, try to [create a wrapper for 
 ## R
 
 All versions from v3.4.4 upwards are installed.
-R is not managed via Spack as it causes some problems with the RStudio Server.
+R is not managed via env modules currently as it causes some problems with RStudio Server.
 R versions are installed at `/opt/R/<version>`.
 
 To load a specific R version, call the following from the terminal
@@ -150,7 +150,6 @@ More information can be found [here](https://github.com/Project-OSRM/osrm-backen
 
 ### GDAL {#gdal}
 
-GDAL is installed and loaded via Spack.
 Check `module avail` and look for GDAL to see which versions are available.
 
 ## Getting Started
