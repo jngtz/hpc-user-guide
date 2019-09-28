@@ -14,56 +14,57 @@ link-citations: yes
 
 # Introduction {#intro}
 
-This is a user manual for the High-Performance-Server (HPC) of the GIScience chair at the Friedrich-Schiller-University Jena.
+Welcome to the user manual of the High-Performance-Server (HPC) of the GIScience group (University Jena).
 
-Its main purpose is to do R processing and its setup is tailored towards this.
-Nevertheless, of course also any job can be submitted to the HPC.
-However, the following manual will focus on getting R code running.
+It is tailored towards R processing.
+This document describes how to get started and submit jobs to the cluster.
 
-The big advantage of a HPC is that users can submit jobs to ONE remote server which then distributes the work across multiple machines in the background.
-Incoming processing requests (jobs) are handled by the installed scheduler (SLURM), taking away the work of scheduling the job and the fear of clashing with other users.
-The status of the job request can be queried easily.
-Administration is simplified by provisioning all compute nodes with the same virtual image.
-This way, update tasks are reduced and differences between the machines are avoided.
-Administration is further simplified by using the [Spack]() package manager as this application allows for version-agnostic library installations on the user level without the need of requesting and waiting for custom installation to the admin.
+#### A short introduction to HPCs
 
-The $HOME directory of every used is shared across all nodes, avoiding the need to keep data and scripts in sync across multiple machines.
+The big advantage of a HPC is that users can submit jobs to ONE machine which then distributes the work across multiple machines in the background.
+Incoming processing requests (jobs) are handled by the scheduler (SLURM), taking away the work of queuing the job and the potential issue of clashing into jobs from other users.
+
+Administration is simplified by provisioning all computing nodes with the same virtual image.
+This way, maintenance tasks are reduced and differences between the machines are avoided.
+Administration is further simplified by using the [Spack](https://spack.io) package manager as this application allows for version-agnostic environment module installations.
+
+The `$HOME` directory of every user is shared across all nodes, avoiding the need to keep data and scripts in sync across multiple machines.
 
 **Before you start**:
 
-1. Working on a Linux server naturally requires a certain amount of familiarity with UNIX command-line shells and text editors.
+- Working on a Linux server naturally requires a certain amount of familiarity with UNIX command-line shells and text editors.
 There are dozens of Linux online tutorials which should help to get you started.^[For example, https://ryanstutorials.net/linuxtutorial/.]
 Of course, there are also great books on how to use Linux such as @shotts_linux_2012, @sobell_practical_2010 and @ward_how_2015 all of which are freely available.
-If you still got stuck, Google might help you.
-1. Please add a SSH key to your account to be able to log on to the server without having to type your password.
-This is especially useful since your password will consist of 20 characters which you most likely will not remember.
+If you still get stuck, Google might help you.
+
+- Please add a SSH key pair to your account to be able to log in to the server without having to type your password.
+This is especially useful since your password will consist of many letters and numbers (> 10) which you do not want to memorize.
 See [this](https://help.github.com/articles/connecting-to-github-with-ssh/) guide if you have never worked with SSH keys before.
-If you are in possession of an SSH key, you can use `ssh-copy-id <username>@141.35.158.107` to copy your key to the server.
+If you already use a SSH key pair on your machine, you can use `ssh-copy-id <username>@141.35.158.107` to copy your key to the server.
 Afterwards you should be able to login via `ssh <username>@141.35.158.107` without being prompted for your password.
-Note also that an SSH key is mandatory if you want to use the [SSH way](#ssh-mode) to schedule jobs.
 
 ## Web Address
 
-* edi.geogr.uni-jena.de
-* IP: 141.35.158.107
+https://edi.geogr.uni-jena.de
+
+IP: 141.35.158.107
 
 ## Hardware
 
-The cluster consists of multiple different computing machines.
+The cluster consists of the following machines:
 
 Group "**threadripper**":
 
-- CPU: AMD Threadripper 2950X, 16-core, Hyperthreading, 3.5 GHz - 4.4 GHz
+- CPU: AMD Threadripper 2950X, 16-core, Hyperthreading support, 3.5 GHz - 4.4 GHz
 - RAM: 126 GB DDR4 
-- Number of nodes: 3 c[0-2] (+ frontend)
-
-Due to management overhead, only 8 cores (16 CPUs) are allowed to be used on the frontent.
+- Number of nodes: 4 c[0-2] (+ frontend)
+- The "frontend" is only operating on 12 cores with 100 GB RAM
 
 Group "**opteron**":
 
 - CPU: AMD Opteron 6172, 48 cores, no Hyperpthreading, 2.1 GHz
-- RAM: 193 GB DDR3
-- Number of nodes: 3 (c[3-6])
+- RAM: 252 GB DDR3
+- Number of nodes: 2 (c[3-4])
 
 The groups are reflected in the scheduler via the "partition" setting.
 
@@ -71,11 +72,10 @@ Group "threadripper" is about 3.5x faster than group "opteron".
 
 ## Software
 
-The HPC was built following the installation guide provided by the [Open HPC](https://openhpc.community/) community (using the "Warewulf + Slurm" edition).  
-It is currently running on a CentOS 7.6 operating system using the CentOS main-line Kernel (currently at version 5.0).  
+The HPC was built following the installation guide provided by the [Open HPC](https://openhpc.community/) community (using the "Warewulf + Slurm" edition) and operates on a CentOS 7 base.
 The scheduler that is used for queuing processing job requests is [SLURM](https://slurm.schedmd.com/).
 Load monitoring is performed via [Ganglia](http://ganglia.sourceforge.net/). 
-A live view is accessible [here](http://edi.geogr.uni-jena.de/ganglia/?r=hour&cs=&ce=&m=load_one&s=by+name&c=&tab=m&vn=&hide-hf=false).  
+A live view is accessible [here](http://edi.geogr.uni-jena.de/ganglia/?r=hour&cs=&ce=&m=load_one&s=by+name&c=&tab=m&vn=&hide-hf=false).
 [Spack](https://spack.io/) is used as the package manager.
 More detailed instructions on the scheduler and the package manager can be found in their respective chapters.
 
@@ -83,7 +83,7 @@ More detailed instructions on the scheduler and the package manager can be found
 
 The _mars_ data server is mounted at `/home` and stores all the data.
 Currently we have a capacity of 20 TB for all users combined.
-You can store all your data under your `/home` directory.
+Data can be stored directly under your `/home` directory.
 
 ## Accessing files from your local computer
 
@@ -92,13 +92,12 @@ Transfer speed ranges between 50 - 100 Mbit/s when you're in the office so you s
 Accessing files from outside will be slower.
 
 If you really run in trouble with transfer speed, you could directly connect to the _mars_ server.
-Currently, the route is as follows: `<local> (sshfs) -> edi (nfs) -> mars`
-We aim to canalize all logins and transfers to one single machine (edi).
-That's why we favorite to not force people to connect to another machine just to upload the data.
+
+Otherwise, the route is as follows: `<local> (sshfs) -> edi (nfs) -> mars`
 
 ### Unix
 
-For Unix system, this can be easily done from the command line via
+For Unix system, the following command can be used
 
 ```sh
 sudo sshfs -o reconnect,idmap=user,transform_symlinks,identityFile=~/.ssh/id_rsa,allow_other,cache=yes,kernel_cache,compression=no,default_permissions,uid=1000,gid=100,umask=0 <username>@141.35.158.107:/ <local-directory>
@@ -110,7 +109,7 @@ Note that the mount is actually performed by the root user, so you need to copy 
 For convenience you can create an executable script that performs this action every time you need it.
 
 ```{block, type='rmdcaution'}
-Auto-mount during boot via `fstab` is not recommended since sometimes the network is not yet up in the moment when the mount is executed.
+Auto-mount during boot via `fstab` is not recommended since sometimes the network is not yet up when the mount is executed.
 This applies especially if you are not in the office but accessing the server from outside.
 ```
 
@@ -126,14 +125,14 @@ Take a look at the R package [workflowr](https://jdblischak.github.io/workflowr/
 
 ### Local web server
 
-_Jupiter_ server (141.35.159.87) is set up as a web-server.
+The _Jupiter_ server (141.35.159.87) is set up as a web-server.
 This means it is able to render HTML contents and list files in a directory listing.
 
 _Jupiter_ is mounted to the cluster at `/mnt/nfs/jupiter`.
 To use the functionality, you simply need to copy your desired files to `/home/www/<folder>` on Jupiter.
 To do so, please follow these steps:
 
-1. Request an account on Jupiter from Andreas (andreas.schaef@uni-jena.de).
+1. Request an account on Jupiter from Andreas
 1. Login to _Jupiter_ and create the desired folders.
     The public URL relates as follows to the local directory:
 
@@ -148,7 +147,7 @@ To do so, please follow these steps:
 
     This code will only copy files that have changed when being compared to the last execution so you can safely automate the call into your workflow.
     
-Since all these contents will be available to everyone, you want to add a README file to your directory listing and also add an Impressum.
+Since all these contents will be available to everyone, you want to add a README.md file to your directory listing as well as an Impressum.
 Even though no one usually knows this URL by default, be careful about sharing sensible files.
 
 See https://jupiter.geogr.uni-jena.de/life-healthy-forest/ for an example.
