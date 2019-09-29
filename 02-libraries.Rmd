@@ -6,6 +6,15 @@ Most system relevant libraries are installed via [Spack](spack.io).
 However, as a user you do not need to worry about this since you are loading everything via "environment modules".
 Available modules can be queried using `modules avail`.
 
+For setup reasons, please put the following at the top of your `~/.bashrc` file
+
+```sh
+export SPACK_ROOT=/opt/spack
+. $SPACK_ROOT/share/spack/setup-env.sh
+
+module use /opt/spack/share/spack/modules/linux-centos7-x86_64/
+```
+
 Please use only module list with the suffix "linux-centos7-zen".
 Here is a snapshot:
 
