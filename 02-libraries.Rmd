@@ -79,6 +79,8 @@ module load geos-3.7.2-gcc-9.2.0-hn6gflr
 module load proj-5.2.0-gcc-9.2.0-az6mkj5
 module load udunits2-2.2.24-gcc-9.2.0-lbs7534
 module load pandoc-2.7.3-gcc-9.2.0-tlzhs7d
+module load openblas-0.3.7-gcc-9.2.0-gwikytn
+module load zlib-1.2.11-gcc-9.2.0-yuybfrv
 ```
 
 Furthermore, I recommend the following ones (don't forget to append your version and compiler):
