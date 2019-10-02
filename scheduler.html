@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Scheduler | HPC User Guide</title>
   <meta name="description" content="Chapter 3 Scheduler | HPC User Guide" />
-  <meta name="generator" content="bookdown 0.13.2 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.14.1 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Scheduler | HPC User Guide" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Patrick Schratz, Jannes Muenchow" />
 
 
-<meta name="date" content="2019-09-30" />
+<meta name="date" content="2019-10-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -224,36 +224,36 @@ And <strong>no</strong>, there is no other way to submit your jobs to the comput
 <ul>
 <li><code>sinfo</code>: An overview of the current state of the nodes</li>
 </ul>
-<div class="sourceCode" id="cb16"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="ex">sinfo</span></a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="ex">PARTITION</span>    AVAIL  TIMELIMIT  NODES  STATE NODELIST</a>
-<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="ex">all*</span>            up   infinite      4  alloc c[0-2],edi</a>
-<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="ex">all*</span>            up   infinite      2   idle c[3-4]</a>
-<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="ex">frontend</span>        up   infinite      1  alloc edi</a>
-<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="ex">threadripper</span>    up   infinite      4  alloc c[0-2],edi</a>
-<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="ex">opteron</span>         up   infinite      2   idle c[3-4]</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="ex">sinfo</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="ex">PARTITION</span>    AVAIL  TIMELIMIT  NODES  STATE NODELIST</a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="ex">all*</span>            up   infinite      4  alloc c[0-2],edi</a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="ex">all*</span>            up   infinite      2   idle c[3-4]</a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="ex">frontend</span>        up   infinite      1  alloc edi</a>
+<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="ex">threadripper</span>    up   infinite      4  alloc c[0-2],edi</a>
+<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="ex">opteron</span>         up   infinite      2   idle c[3-4]</a></code></pre></div>
 <ul>
 <li><code>squeue</code>: An overview of the current jobs that are queued, including information about running jobs</li>
 </ul>
-<div class="sourceCode" id="cb17"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="ex">squeue</span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="ex">JOBID</span>     PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)</a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="ex">129_</span>[2-5]    threadripper  cmq7381  patrick PD       0:00      1 (Resources)</a>
-<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="ex">121_2</span>        threadripper  cmq7094  patrick  R    6:24:17      1 c1</a>
-<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="ex">121_3</span>        threadripper  cmq7094  patrick  R    6:24:17      1 c2</a>
-<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="ex">129_1</span>        threadripper  cmq7381  patrick  R    5:40:44      1 c0</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="ex">squeue</span></a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="ex">JOBID</span>     PARTITION     NAME     USER ST       TIME  NODES NODELIST(REASON)</a>
+<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="ex">129_</span>[2-5]    threadripper  cmq7381  patrick PD       0:00      1 (Resources)</a>
+<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="ex">121_2</span>        threadripper  cmq7094  patrick  R    6:24:17      1 c1</a>
+<a class="sourceLine" id="cb18-6" data-line-number="6"><span class="ex">121_3</span>        threadripper  cmq7094  patrick  R    6:24:17      1 c2</a>
+<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="ex">129_1</span>        threadripper  cmq7381  patrick  R    5:40:44      1 c0</a></code></pre></div>
 <ul>
 <li><code>sacct</code>: Overview of jobs that were submitted in the past including their end state</li>
 </ul>
-<div class="sourceCode" id="cb18"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="ex">122</span>             cmq7094     threadripper     (null)          <span class="ex">0</span>  COMPLETED      0:0</a>
-<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="ex">123</span>             cmq7094     threadripper     (null)          <span class="ex">0</span>    PENDING      0:0</a>
-<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="ex">121</span>             cmq7094     threadripper     (null)          <span class="ex">0</span>    PENDING      0:0</a>
-<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="ex">125</span>             cmq6623     threadripper     (null)          <span class="ex">0</span>     FAILED      1:0</a>
-<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="ex">126</span>             cmq6623     threadripper     (null)          <span class="ex">0</span>     FAILED      1:0</a>
-<a class="sourceLine" id="cb18-6" data-line-number="6"><span class="ex">127</span>             cmq6623     threadripper     (null)          <span class="ex">0</span>     FAILED      1:0</a>
-<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="ex">128</span>             cmq6623     threadripper     (null)          <span class="ex">0</span>     FAILED      1:0</a>
-<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="ex">124</span>             cmq6623     threadripper     (null)          <span class="ex">0</span>     FAILED      1:0</a>
-<a class="sourceLine" id="cb18-9" data-line-number="9"><span class="ex">130</span>             cmq7381     threadripper     (null)          <span class="ex">0</span>    PENDING      0:0</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="ex">122</span>             cmq7094     threadripper     (null)          <span class="ex">0</span>  COMPLETED      0:0</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="ex">123</span>             cmq7094     threadripper     (null)          <span class="ex">0</span>    PENDING      0:0</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="ex">121</span>             cmq7094     threadripper     (null)          <span class="ex">0</span>    PENDING      0:0</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="ex">125</span>             cmq6623     threadripper     (null)          <span class="ex">0</span>     FAILED      1:0</a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="ex">126</span>             cmq6623     threadripper     (null)          <span class="ex">0</span>     FAILED      1:0</a>
+<a class="sourceLine" id="cb19-6" data-line-number="6"><span class="ex">127</span>             cmq6623     threadripper     (null)          <span class="ex">0</span>     FAILED      1:0</a>
+<a class="sourceLine" id="cb19-7" data-line-number="7"><span class="ex">128</span>             cmq6623     threadripper     (null)          <span class="ex">0</span>     FAILED      1:0</a>
+<a class="sourceLine" id="cb19-8" data-line-number="8"><span class="ex">124</span>             cmq6623     threadripper     (null)          <span class="ex">0</span>     FAILED      1:0</a>
+<a class="sourceLine" id="cb19-9" data-line-number="9"><span class="ex">130</span>             cmq7381     threadripper     (null)          <span class="ex">0</span>    PENDING      0:0</a></code></pre></div>
 <ul>
 <li><code>scancel</code>: Cancel running jobs using the job ID identifier</li>
 </ul>
