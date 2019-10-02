@@ -53,7 +53,10 @@ For example, one of my templates looks like this:
 
 cd path/to/project
 
-CMQ_AUTH={{ auth }} /opt/R/<version>/bin/R --no-save --no-restore -e 'clustermq:::worker("{{ master }}")'
+# load desired R version
+module load r-3.5.2-gcc-9.2.0-womfaw
+
+CMQ_AUTH={{ auth }} R --no-save --no-restore -e 'clustermq:::worker("{{ master }}")'
 ```
 
 Note: The `#` signs are no mistakes here, they are no "comment" signs in this context. 
