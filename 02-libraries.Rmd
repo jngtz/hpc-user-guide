@@ -79,6 +79,7 @@ module load udunits2-2.2.24-gcc-9.2.0-lbs7534
 module load pandoc-2.7.3-gcc-9.2.0-tlzhs7d
 module load openblas-0.3.7-gcc-9.2.0-gwikytn
 module load zlib-1.2.11-gcc-9.2.0-yuybfrv
+module load libiconv-1.15-gcc-9.2.0-gbu6lja
 ```
 
 Furthermore, I recommend the following ones (don't forget to append your version and compiler):
