@@ -116,13 +116,13 @@ and then execute `R` (or preferably [radian](#radian)).
 You might find the following aliases helpful which you can put into `~/.bashrc`:
 
 ```sh
-alias r344="export R_HOME=/opt/spack/opt/spack/linux-centos7-zen/gcc-9.2.0/r-3.4.4-                  kupgqwndpf5uvzxbnatvdjudwcj62iyl/rlib/R && radian"
-alias r350="export R_HOME=/opt/spack/opt/spack/linux-centos7-zen/gcc-9.2.0/r-3.5.0-                  bekwaws5wmeeirs56jvucoh4ttpotrjs/rlib/R && radian"
-alias r351="export R_HOME=/opt/spack/opt/spack/linux-centos7-zen/gcc-9.2.0/r-3.5.1-                  b6kiutmbi5bvspdra2wn77wz2nj3k524/rlib/R && radian"
-alias r352="export R_HOME=/opt/spack/opt/spack/linux-centos7-zen/gcc-9.2.0/r-3.5.2-                  womfawwtyl2pemdiuwdt42oag2opdyly/rlib/R && radian"
-alias r353="export R_HOME=/opt/spack/opt/spack/linux-centos7-zen/gcc-9.2.0/r-3.5.3-                  ma5uftfx6jiwaiao2pvgoyk2rvbcggdo/rlib/R && radian"
-alias r360="export R_HOME=/opt/spack/opt/spack/linux-centos7-zen/gcc-9.2.0/r-3.6.0-                  eisnquf3lypcfqlj2vdidohvspbnrwrn/rlib/R && radian"
-alias r361="export R_HOME=/opt/spack/opt/spack/linux-centos7-zen/gcc-9.2.0/r-3.6.1-                  pegug4inb7lszarkfpkewbd7ctsrcqze/rlib/R/ && radian"
+alias r344="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.4.4-rzhfe5glzycgamye6qlrvsnetronftpw/rlib/R && radian"
+alias r350="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.0-qpdg7ahjfznh5ivoj4eetzbr3bf4cad7/rlib/R && radian"
+alias r351="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.1-rjchaiabtobk76x2th2ukxsstyk2lnoo/rlib/R && radian"
+alias r352="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.2-ikmvwxzm4redzk5rhubfjjwzkoaskfbl/rlib/R && radian"
+alias r353="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.3-g6smxppqwljnukmag23jfixrd5vabxcd/rlib/R && radian"
+alias r360="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.6.0-fn2ixao7s2mrvweuhhkceptmew6pgqra/rlib/R && radian"
+alias r361="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.6.1-cfrumokg7m7jx4acgu7pwg5suhcngj35/rlib/R && radian"
 ```
 
 This enables you to launch the specific R version using the set command, e.g. `r360` will launch R v3.6.0.
