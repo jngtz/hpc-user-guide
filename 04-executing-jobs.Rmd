@@ -171,7 +171,7 @@ For example, if you want to build three R objects named `object1`, `object2` and
 
 ```r
 drake::make(plan, targets = c("object1", "object2", "object3"), jobs = 3, 
-            template = list(n_cpus = 16, memory = 320000, 
+            template = list(n_cpus = 16, memory = "100G", 
             log_file = "/path/to/log.txt"))
 ```
 
