@@ -228,7 +228,7 @@ Note that you can add any bash commands into the scripts between the <code>SBATC
 For example, one of my templates looks like this:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="co">#!/bin/sh</span></a>
 <a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co">#SBATCH --job-name={{ job_name }}</span></a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="co">#SBATCH --partition=threadripper</span></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="co">#SBATCH --partition=all</span></a>
 <a class="sourceLine" id="cb21-4" data-line-number="4"><span class="co">#SBATCH --output={{ log_file | /dev/null }} # you can add .%a for array index</span></a>
 <a class="sourceLine" id="cb21-5" data-line-number="5"><span class="co">#SBATCH --error={{ log_file | /dev/null }}</span></a>
 <a class="sourceLine" id="cb21-6" data-line-number="6"><span class="co">#SBATCH --cpus-per-task={{ n_cpus }}</span></a>
