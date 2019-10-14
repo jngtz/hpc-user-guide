@@ -62,7 +62,7 @@ Group "**threadripper**":
 
 Group "**opteron**":
 
-- CPU: AMD Opteron 6172, 48 cores, no Hyperpthreading, 2.1 GHz
+- CPU: AMD Opteron 6172, 48 cores, no Hyperthreading, 2.1 GHz
 - RAM: 252 GB DDR3
 - Number of nodes: 2 (c[3-4])
 
