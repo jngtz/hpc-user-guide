@@ -24,7 +24,7 @@
 <meta name="author" content="Patrick Schratz, Jannes Muenchow" />
 
 
-<meta name="date" content="2019-10-02" />
+<meta name="date" content="2019-10-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -335,7 +335,7 @@ You can specify any number of targets that should be build when calling <code>dr
 <code>drake</code> will take care that for each target as separate job is created which is then added to the SLURM queue.</p>
 <p>For example, if you want to build three R objects named <code>object1</code>, <code>object2</code> and <code>object3</code> in parallel, one on each node:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">drake<span class="op">::</span><span class="kw">make</span>(plan, <span class="dt">targets =</span> <span class="kw">c</span>(<span class="st">&quot;object1&quot;</span>, <span class="st">&quot;object2&quot;</span>, <span class="st">&quot;object3&quot;</span>), <span class="dt">jobs =</span> <span class="dv">3</span>, </a>
-<a class="sourceLine" id="cb25-2" data-line-number="2">            <span class="dt">template =</span> <span class="kw">list</span>(<span class="dt">n_cpus =</span> <span class="dv">16</span>, <span class="dt">memory =</span> <span class="dv">320000</span>, </a>
+<a class="sourceLine" id="cb25-2" data-line-number="2">            <span class="dt">template =</span> <span class="kw">list</span>(<span class="dt">n_cpus =</span> <span class="dv">16</span>, <span class="dt">memory =</span> <span class="st">&quot;100G&quot;</span>, </a>
 <a class="sourceLine" id="cb25-3" data-line-number="3">            <span class="dt">log_file =</span> <span class="st">&quot;/path/to/log.txt&quot;</span>))</a></code></pre></div>
 <ul>
 <li>Creates three jobs which are added to the SLURM queue</li>
