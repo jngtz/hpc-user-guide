@@ -43,7 +43,7 @@ This module is the only one that you should which uses `gcc-4.8.5`.
 Make sure to also put this one into your `~/.bashrc` file!
 
 ```sh
-module load gcc-9.2.0-gcc-4.8.5-o3uv2jk
+module load gcc-9.2.0-gcc-4.8.5-wqdecm4
 ```
 
 Now you can (for example) load GDAL:
@@ -72,22 +72,25 @@ Simply add them to `~/.bashrc`.
 When running R for spatial analysis, the following are required:
 
 ```sh
-module load gdal-3.0.1-gcc-9.2.0-2rbxot4
-module load geos-3.7.2-gcc-9.2.0-hn6gflr
-module load proj-5.2.0-gcc-9.2.0-az6mkj5
-module load udunits2-2.2.24-gcc-9.2.0-lbs7534
-module load pandoc-2.7.3-gcc-9.2.0-tlzhs7d
-module load openblas-0.3.7-gcc-9.2.0-gwikytn
-module load zlib-1.2.11-gcc-9.2.0-yuybfrv
-module load libiconv-1.15-gcc-9.2.0-gbu6lja
+module load \
+  gcc-9.2.0-gcc-4.8.5-wqdecm4 \
+  gdal-2.4.2-gcc-9.2.0-henhg26 \
+  geos-3.7.2-gcc-9.2.0-jxq7o2n \
+  git-2.21.0-gcc-9.2.0-o45v5mj \
+  openblas-0.3.7-gcc-9.2.0-epeitvj \
+  proj-5.2.0-gcc-9.2.0-5t4r5t4 \
+  udunits2-2.2.24-gcc-9.2.0-hupsw3n \
+  zlib-1.2.11-gcc-9.2.0-j3zdmzq
 ```
 
 Furthermore, I recommend the following ones (don't forget to append your version and compiler):
 
 ```sh
-module load byobu-5.127-gcc-9.2.0-x5e5mnz
-module load git-2.21.0-gcc-9.2.0-hhkbkhg
-module load ccache-3.3.4-gcc-9.2.0-7klqklq
+byobu-5.127-gcc-9.2.0-x5e5mnz
+git-2.21.0-gcc-9.2.0-hhkbkhg
+ccache-3.3.4-gcc-9.2.0-7klqklq
+python-3.7.4-gcc-9.2.0-nbjbfzi
+curl-7.63.0-gcc-9.2.0-cq4w37y
 ```
 
 You might wonder why you shouldn't add a R version to this list?
@@ -98,7 +101,7 @@ So yes, you always need to specifically load R when logging into a new session.
 
 Also make sure that `GDAL` and friends are loaded in your `.bashrc` file as otherwise RStudio Server will not find them.
 
-If you need to load specifc modules for a project, try to [create a wrapper for your project](#wrapper).
+If you need to load specific modules for a project, try to [create a wrapper for your project](#wrapper).
 
 ## R
 
@@ -117,13 +120,13 @@ and then execute `R` (or preferably [radian](#radian)).
 You might find the following aliases helpful which you can put into `~/.bashrc`:
 
 ```sh
-alias r344="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.4.4-rzhfe5glzycgamye6qlrvsnetronftpw/rlib/R && radian"
-alias r350="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.0-qpdg7ahjfznh5ivoj4eetzbr3bf4cad7/rlib/R && radian"
-alias r351="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.1-rjchaiabtobk76x2th2ukxsstyk2lnoo/rlib/R && radian"
-alias r352="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.2-ikmvwxzm4redzk5rhubfjjwzkoaskfbl/rlib/R && radian"
-alias r353="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.3-g6smxppqwljnukmag23jfixrd5vabxcd/rlib/R && radian"
-alias r360="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.6.0-fn2ixao7s2mrvweuhhkceptmew6pgqra/rlib/R && radian"
-alias r361="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.6.1-cfrumokg7m7jx4acgu7pwg5suhcngj35/rlib/R && radian"
+alias r344="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.4.4-42emg6m4wkk6bswnyxtesxwrnffrq7sv/rlib/R && radian"
+alias r350="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.0-vxfbbsbmk7imu2jf3mduchjgbyazqe2k/rlib/R && radian"
+alias r351="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.1-g3emejsyn5ligjmjsjeipls7r45hurmr/rlib/R && radian"
+alias r352="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.2-4syrmqv6iyv2fduikyzcthlcadhxchtj/rlib/R && radian"
+alias r353="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.3-dqlp6ip4qhwl7daxxinmrbnd3hugocey/rlib/R && radian"
+alias r360="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.6.0-h4qkjjsfix2slz7trkvo23424cn7qhiq/rlib/R && radian"
+alias r361="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.6.1-jzptgaxyzfsgqnwzl3wzgeude5efi5z2/rlib/R && radian"
 ```
 
 This enables you to launch the specific R version using the set command, e.g. `r360` will launch R v3.6.0.
