@@ -16,7 +16,7 @@
 
 **Question**: I cannot install `udunits2`. What shall I do?  
 **Answer**: Install it via `install.packages('udunits2', type = 'source',  configure.args='--with-udunits2-lib=<path-to-installation>'`.
-For example `"--with-udunits2-include=/opt/spack/opt/spack/linux-centos7-zen/gcc-9.2.0/udunits2-2.2.24-lbs7534pnuqex4ce3s3houcgcpabyrhq/include/"`.
+For example `"--with-udunits2-include=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/udunits2-2.2.24-hupsw3nzjxtem7wlwyugyga2uh4xgieo/include/"`.
 
 You can set this option permanently in `~/.Rprofile` in `options(configure.args = list(udunits = c(<>)))`.
 

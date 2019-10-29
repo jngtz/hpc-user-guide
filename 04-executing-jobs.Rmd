@@ -54,7 +54,7 @@ For example, one of my templates looks like this:
 cd path/to/project
 
 # load desired R version
-module load r-3.5.2-gcc-9.2.0-womfaw
+module load r-3.5.2-gcc-9.2.0-4syrmqv
 
 CMQ_AUTH={{ auth }} R --no-save --no-restore -e 'clustermq:::worker("{{ master }}")'
 ```
