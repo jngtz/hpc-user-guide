@@ -24,7 +24,7 @@
 <meta name="author" content="Patrick Schratz, Jannes Muenchow" />
 
 
-<meta name="date" content="2019-10-28" />
+<meta name="date" content="2019-10-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -204,21 +204,11 @@ Available modules can be queried using <code>modules avail</code>.</p>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="bu">.</span> <span class="va">$SPACK_ROOT</span><span class="ex">/share/spack/setup-env.sh</span></a></code></pre></div>
 <p>Please use only module list with the suffix “linux-centos7-zen”.
 Here is a snapshot:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="ex">-------------------------</span> /opt/spack/share/spack/modules/linux-centos7-zen -------------------------</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">   <span class="ex">byobu-5.127-gcc-9.2.0-x5e5mnz</span>    (L)    <span class="ex">pkg-config-0.29.2-gcc-9.2.0-tsjdiyy</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">   <span class="ex">ccache-3.3.4-gcc-9.2.0-7klqklq</span>   (L)    <span class="ex">proj-4.9.2-gcc-9.2.0-3skzcql</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">   <span class="ex">cmake-3.15.3-gcc-9.2.0-e7uy3lq</span>          proj-5.2.0-gcc-9.2.0-az6mkj5        (L)</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">   <span class="ex">curl-7.63.0-gcc-9.2.0-zqkxl74</span>    (L)    <span class="ex">proj-6.1.0-gcc-9.2.0-i25e6py</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">   <span class="ex">gdal-2.4.2-gcc-9.2.0-vbgkeil</span>            r-rgdal-1.4-4-gcc-9.2.0-elwh3bl</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">   <span class="ex">gdal-3.0.1-gcc-9.2.0-2rbxot4</span>     (L)    <span class="ex">r-rgdal-1.4-4-gcc-9.2.0-u3ixmgg</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">   <span class="ex">geos-3.7.2-gcc-9.2.0-hn6gflr</span>     (L)    <span class="ex">sqlite-3.29.0-gcc-9.2.0-abag2du</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">   <span class="ex">neovim-0.3.4-gcc-9.2.0-tsvynsq</span>   (L)    <span class="ex">zlib-1.2.11-gcc-9.2.0-yuybfrv</span>       (L)</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">   <span class="ex">openblas-0.3.7-gcc-9.2.0-gwikytn</span> (L)</a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="ex">------------------------------------</span> /opt/ohpc/pub/modulefiles -------------------------------------</a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">   <span class="ex">EasyBuild/3.9.2</span>       clustershell/1.8.1    hwloc/2.0.3    pmix/2.2.2           valgrind/3.15.0</a>
-<a class="sourceLine" id="cb4-14" data-line-number="14">   <span class="ex">autotools</span>             cmake/3.14.3          ohpc           prun/1.3</a>
-<a class="sourceLine" id="cb4-15" data-line-number="15">   <span class="ex">charliecloud/0.9.7</span>    gnu8/8.3.0            papi/5.7.0     singularity/3.2.1</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="ex">-------------------------</span> /opt/spack/share/spack/modules/linux-centos7-x86_64 --------------------------</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">   <span class="ex">byobu-5.127-gcc-9.2.0-by2qc2g</span>          (L)    <span class="ex">python-3.7.4-gcc-9.2.0-nbjbfzi</span>     (L)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">   <span class="ex">ccache-3.3.4-gcc-9.2.0-v3xzqqh</span>         (L)    <span class="ex">r-3.4.4-gcc-9.2.0-42emg6m</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">   <span class="ex">curl-7.63.0-gcc-9.2.0-cq4w37y</span>          (L)    <span class="ex">r-3.5.0-gcc-9.2.0-vxfbbsb</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">   <span class="ex">fish-3.0.0-gcc-9.2.0-gdyab6r</span>      </a></code></pre></div>
 </div>
 <div id="loading-modules" class="section level2">
 <h2><span class="header-section-number">2.2</span> Loading modules</h2>
@@ -228,7 +218,7 @@ This module is the only one that you should which uses <code>gcc-4.8.5</code>.
 Make sure to also put this one into your <code>~/.bashrc</code> file!</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="ex">module</span> load gcc-9.2.0-gcc-4.8.5-wqdecm4</a></code></pre></div>
 <p>Now you can (for example) load GDAL:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="ex">module</span> load gdal-3.0.1-gcc-9.2.0-2rbxot4 </a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="ex">module</span> load gdal-2.4.2-gcc-9.2.0-henhg26</a></code></pre></div>
 <p>You can check that it worked via</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="ex">gdalinfo</span> --version</a></code></pre></div>
 </div>
@@ -266,12 +256,11 @@ So yes, you always need to specifically load R when logging into a new session.<
 </div>
 <div id="r" class="section level2">
 <h2><span class="header-section-number">2.5</span> R</h2>
-<p>All versions from v3.4.4 upwards are installed.
-R is not managed via env modules currently as it causes some problems with RStudio Server.
-R versions are installed at <code>/opt/R/&lt;version&gt;</code>.</p>
-<p>To load a specific R version, call the following from the terminal</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="bu">export</span> <span class="va">R_HOME=</span>/opt/R/<span class="op">&lt;</span><span class="ex">version</span><span class="op">&gt;</span>/lib64/R</a></code></pre></div>
-<p>and then execute <code>R</code> (or preferably <a href="libraries.html#radian">radian</a>).</p>
+<p>All versions from v3.4.4 upwards are installed.</p>
+<p>To load a specific R version, load the specific environment module</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># loads R v3.5.2</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="ex">module</span> load r-3.5.2-gcc-9.2.0-4syrmqv</a></code></pre></div>
+<p>and then execute <code>R</code>.</p>
 <p>You might find the following aliases helpful which you can put into <code>~/.bashrc</code>:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="bu">alias</span> r344=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.4.4-42emg6m4wkk6bswnyxtesxwrnffrq7sv/rlib/R &amp;&amp; radian&quot;</span></a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="bu">alias</span> r350=<span class="st">&quot;export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.0-vxfbbsbmk7imu2jf3mduchjgbyazqe2k/rlib/R &amp;&amp; radian&quot;</span></a>
