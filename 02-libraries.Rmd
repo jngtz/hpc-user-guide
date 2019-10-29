@@ -96,16 +96,15 @@ If you need to load specific modules for a project, try to [create a wrapper for
 ## R
 
 All versions from v3.4.4 upwards are installed.
-R is not managed via env modules currently as it causes some problems with RStudio Server.
-R versions are installed at `/opt/R/<version>`.
 
-To load a specific R version, call the following from the terminal
+To load a specific R version, load the specific environment module
 
 ```sh
-export R_HOME=/opt/R/<version>/lib64/R
+# loads R v3.5.2
+module load r-3.5.2-gcc-9.2.0-4syrmqv
 ```
 
-and then execute `R` (or preferably [radian](#radian)).
+and then execute `R`.
 
 You might find the following aliases helpful which you can put into `~/.bashrc`:
 
