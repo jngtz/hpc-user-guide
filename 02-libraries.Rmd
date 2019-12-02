@@ -118,7 +118,7 @@ alias r361="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-
 
 This enables you to launch the specific R version using the set command, e.g. `r360` will launch R v3.6.0.
 
-** BLAS/LAPACK**
+**BLAS/LAPACK**
 
 Unfortunately we cannot use an external BLAS/LAPACK like `openblas` due to the different architectures on the nodes.
 When compiling R with the use of external BLAS/LAPACK, `openblas` tailors to the arch of the main node (threadripper) and specific processes (e.g. function from the `mgcv`) package will segfault
