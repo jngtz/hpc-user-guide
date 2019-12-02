@@ -110,10 +110,10 @@ You might find the following aliases helpful which you can put into `~/.bashrc`:
 alias r344="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.4.4-hobcfrryiwu34etqvf4khv427wwkxdf5/rlib/R && radian"
 alias r350="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.0-jx2cc3ecnk4zkfz3kqwomwsm5rpfouiv/rlib/R && radian"
 alias r351="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.1-h4fvapuqf65avikja735xn5lzyildzzi/rlib/R && radian"
-alias r352="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.2-oxo76vod4vlov4izzqi7zbweh27w24uc/rlib/R && radian"
+alias r352="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.2-oxo76vo5ceamc2qp6nfr6zvcqstvzksb/rlib/R && radian"
 alias r353="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.5.3-a75bebsahiaaz6lrcdallnjprx3iybjv/rlib/R && radian"
 alias r360="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.6.0-2sbeu7xbnocpahdm7afuonsumblmgi5j/rlib/R && radian"
-alias r361="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.6.1-j25wr6zvjsnui32jcgntxouhwm4w6axi/rlib/R && radian"
+alias r361="export R_HOME=/opt/spack/opt/spack/linux-centos7-x86_64/gcc-9.2.0/r-3.6.1-j25wr6zcofibs2zfjwg37357rjj26lqb/rlib/R && radian"
 ```
 
 This enables you to launch the specific R version using the set command, e.g. `r360` will launch R v3.6.0.
