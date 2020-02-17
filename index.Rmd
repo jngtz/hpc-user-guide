@@ -117,7 +117,9 @@ This applies especially if you are not in the office but accessing the server fr
 
 ### Windows
 
-Please install [sshfs-win](https://github.com/billziss-gh/sshfs-win) and follow the instructions.
+Please install [sshfs-win](https://github.com/billziss-gh/sshfs-win) and follow the instructions. 
+
+Note that this location (e.g., jason@141.35.158.107, or "jason@141.35.158.107 (\\sshfs) (Y:)" as seen in your windows explorer once mounted) is your home directory on mars that you will work from using the servers. Here you can create a folder structure for your data, scripts etc...
 
 ## Sharing of Results
 
